@@ -1,0 +1,8 @@
+.appoint-btn:hover {
+    color: #fff !important;
+    background-color: #6e66f7 !important;
+}
+
+.appoint-btn:focus {
+    box-shadow: none;
+}
