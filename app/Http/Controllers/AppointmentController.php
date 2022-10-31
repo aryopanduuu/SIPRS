@@ -21,13 +21,19 @@ class AppointmentController extends Controller
 	public function checkNomorRekamMedis(AppointmentRequest $request)
 	{
 		$validated = $request->validated();
-		$user = User::whereNomorRekamMedis($validated['nomor_rekam_medis']);
-		$response = [
-			'total'  => $user->count(),
-			'status' => 200
-		];
+		$user = User::whereNomorRekamMedis($validated['nomor_rekam_medis'])->whereTglLahir($validated['tgl_lahir']);
 		if (!$user->count()) {
-			$response['msg'] = 'Data nomor rekam medis tidak ditemukan.';
+			$response = [
+				'errors' => [
+					'nomor_rekam_medis' => ['Data nomor rekam medis tidak ditemukan.']
+				],
+				'status' => 404
+			];
+		} else {
+			$response = [
+				'total'  => $user->count(),
+				'status' => 200
+			];
 		}
 		return response()->json($response, 200);
 	}

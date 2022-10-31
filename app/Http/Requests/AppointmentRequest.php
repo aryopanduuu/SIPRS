@@ -15,7 +15,20 @@ class AppointmentRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'nomor_rekam_medis' => ['required']
+			'nomor_rekam_medis' => ['required'],
+			'tgl_lahir' => ['required', 'date']
+		];
+	}
+
+	/**
+	 * Get custom attributes for validator errors.
+	 *
+	 * @return array
+	 */
+	public function attributes()
+	{
+		return [
+			'tgl_lahir' => 'Tanggal lahir',
 		];
 	}
 }

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
@@ -28,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
 		$route = $this->app->request;
 		View::share('menu', [
 			[
-				'url'      => $route->route('home'),
+				'url'      => '',
 				'title'    => 'Home',
 				'name'     => 'home',
 				'hasChild' => false

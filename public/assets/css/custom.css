@@ -14,3 +14,14 @@
 .invalid-feedback>p {
     font-size: .8rem;
 }
+
+.btn-clear {
+    top: 1px;
+    right: 1px;
+    z-index: 100;
+    position: absolute;
+}
+
+.form-control.is-invalid~.btn-clear {
+    right: 20px;
+}
