@@ -23,7 +23,10 @@
                                 </li>
                                 @endforeach
                                 <li class="nav-item">
-                                    <a class="btn btn-primary appoint-btn nav-link" href="">Pendaftaran Online</a>
+                                    <a class="btn btn-primary appoint-btn nav-link"
+                                        href="{{ route('appointment.index') }}">
+                                        Pendaftaran Online
+                                    </a>
                                 </li>
                             </ul>
                         </div>

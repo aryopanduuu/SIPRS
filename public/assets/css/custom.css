@@ -3,6 +3,14 @@
     background-color: #6e66f7 !important;
 }
 
-.appoint-btn:focus {
+.btn:focus {
     box-shadow: none;
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+}
+
+.invalid-feedback>p {
+    font-size: .8rem;
 }
