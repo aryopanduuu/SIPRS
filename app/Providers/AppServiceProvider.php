@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
 	public function register()
 	{
 		Sanctum::ignoreMigrations();
+		$this->app->register(RouteServiceProvider::class);
 	}
 
 	/**
@@ -26,44 +27,45 @@ class AppServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
-		$route = $this->app->request;
-		View::share('menu', [
-			[
-				'url'      => '',
-				'title'    => 'Home',
-				'name'     => 'home',
-				'hasChild' => false
-			],
-			[
-				'url' => '',
-				'title' => 'Tentang',
-				'name'     => 'tentang',
-				'hasChild' => false
-			],
-			[
-				'url' => '',
-				'title' => 'Poli',
-				'name'     => 'poli',
-				'hasChild' => true
-			],
-			[
-				'url' => '',
-				'title' => 'Spesialis',
-				'name'     => 'spesialis',
-				'hasChild' => true
-			],
-			[
-				'url' => '',
-				'title' => 'Dokter',
-				'name'     => 'dokter',
-				'hasChild' => true
-			],
-			[
-				'url' => '',
-				'title' => 'Kontak',
-				'name'     => 'kontak',
-				'hasChild' => false
-			]
-		]);
+		$this->app->booted(function () {
+			View::share('menu', [
+				[
+					'url'      => route('home'),
+					'title'    => 'Home',
+					'name'     => 'home',
+					'hasChild' => false
+				],
+				[
+					'url' => '',
+					'title' => 'Tentang',
+					'name'     => 'tentang',
+					'hasChild' => false
+				],
+				[
+					'url' => '',
+					'title' => 'Poli',
+					'name'     => 'poli',
+					'hasChild' => true
+				],
+				[
+					'url' => '',
+					'title' => 'Spesialis',
+					'name'     => 'spesialis',
+					'hasChild' => true
+				],
+				[
+					'url' => '',
+					'title' => 'Dokter',
+					'name'     => 'dokter',
+					'hasChild' => true
+				],
+				[
+					'url' => '',
+					'title' => 'Kontak',
+					'name'     => 'kontak',
+					'hasChild' => false
+				]
+			]);
+		});
 	}
 }
