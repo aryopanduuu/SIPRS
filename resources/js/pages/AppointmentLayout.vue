@@ -30,6 +30,13 @@
                             <p>{{ errMessage.tgl_lahir[0] }}</p>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <!-- <vue-recaptcha ref="recaptcha" @verify="setRecaptcha" @error="setRecaptchaError"
+                            :sitekey="recaptchaSiteKey" /> -->
+                        <div class="invalid-feedback d-block" v-if="errMessage.recaptcha">
+                            <p>{{ errMessage.recaptcha[0] }}</p>
+                        </div>
+                    </div>
                     <div class=" form-group text-center m-b-0">
                         <button class="account-btn btn btn-primary" @click="searchNomorRekamMedis">
                             <i class="fa fa-search"></i> Cari
@@ -42,14 +49,28 @@
 </template>
 
 <script>
+    import {
+        VueRecaptcha
+    } from 'vue-recaptcha';
     export default {
+        components: {
+            VueRecaptcha
+        },
         data() {
             return {
                 errMessage: {},
-                showClearBtn: false
+                showClearBtn: false,
+                recaptchaSiteKey: import.meta.env.VITE_RECAPTCHA_SITE_KEY,
+                recaptchaToken: null,
             }
         },
         methods: {
+            setRecaptcha(response) {
+                this.recaptchaToken = response
+            },
+            setRecaptchaError() {
+                this.errMessage.recaptcha = ["Terjadi kesalahan ketika memuat recaptcha. Silahkan perbarui halaman."]
+            },
             clearInput(event) {
                 this.$refs.nomor_rekam_medis.value = null
                 this.showClearBtn = false
@@ -67,7 +88,8 @@
                     method: 'POST',
                     data: {
                         nomor_rekam_medis: $$this.$refs.nomor_rekam_medis.value,
-                        tgl_lahir: $$this.$refs.tgl_lahir.value
+                        tgl_lahir: $$this.$refs.tgl_lahir.value,
+                        // recaptcha: $$this.recaptchaToken
                     },
                     headers: {
                         'X-Dry-Run': true,
@@ -80,15 +102,16 @@
                     },
                     complete: function () {
                         Notiflix.Block.remove('.account-box')
+                        // $$this.$refs.recaptcha.reset()
                     },
                     success: function (result, status, xhr) {
-                        if (!result.total) {
+                        if (result.status != 200) {
                             $$this.errMessage = result.errors
                             $$this.$refs.nomor_rekam_medis.focus()
+                            $$this.$refs.tgl_lahir = null
                         }
                     },
                     error: function (xhr, status, error) {
-                        $('#errMessage').html(123)
                         if (xhr.responseJSON.errors) {
                             $$this.errMessage = xhr.responseJSON.errors
                         }

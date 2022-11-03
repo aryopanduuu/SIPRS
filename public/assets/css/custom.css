@@ -22,6 +22,6 @@
     position: absolute;
 }
 
-.form-control.is-invalid~.btn-clear {
+.form-control.is-invalid:not(:-internal-autofill-selected)~.btn-clear {
     right: 20px;
 }
