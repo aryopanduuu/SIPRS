@@ -13,13 +13,12 @@
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-    @notifyCss
     @stack('custom-css')
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <!--[if lt IE 9]>
-		<script src="assets/js/html5shiv.min.js"></script>
-		<script src="assets/js/respond.min.js"></script>
-		<![endif]-->
+  <script src="assets/js/html5shiv.min.js"></script>
+  <script src="assets/js/respond.min.js"></script>
+  <![endif]-->
 </head>
 
 <body>
@@ -35,7 +34,6 @@
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/theme.js') }}"></script>
-    @notifyJs
     @stack('custom-js')
 </body>
 
