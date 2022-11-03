@@ -29,7 +29,6 @@
         @yield('content')
     </div>
     @include('partials.footer')
-    <x:notify-messages />
     <div class="sidebar-overlay" data-reff="#side_menu"></div>
     <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>
