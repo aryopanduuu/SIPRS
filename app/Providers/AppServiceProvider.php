@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
 					'hasChild' => false
 				],
 				[
-					'url' => '',
+					'url' => route('poli'),
 					'title' => 'Poli',
 					'name'     => 'poli',
 					'hasChild' => true
