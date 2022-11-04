@@ -14,3 +14,5 @@ Route::prefix('appointment')->name('appointment.')->group(function () {
 });
 
 Route::get('/poli', 'PoliController@index')->name('poli');
+
+Route::get('/spesialis', 'SpesialisController@index')->name('spesialis');
