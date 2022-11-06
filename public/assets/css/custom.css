@@ -25,3 +25,11 @@
 .form-control.is-invalid:not(:-internal-autofill-selected)~.btn-clear {
     right: 20px;
 }
+
+.select2-search__field {
+    outline: none;
+}
+
+.vertical-align-middle {
+    vertical-align: middle !important;
+}

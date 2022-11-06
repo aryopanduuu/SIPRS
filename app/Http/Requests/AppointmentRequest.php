@@ -14,11 +14,20 @@ class AppointmentRequest extends FormRequest
 	 */
 	public function rules()
 	{
-		return [
-			'nomor_rekam_medis' => ['required'],
-			'tgl_lahir' => ['required', 'date'],
-			// 'recaptcha' => 'recaptcha'
-		];
+		if (request()->step == 1) {
+			$rules = [
+				'nomor_rekam_medis' => ['required'],
+				'tgl_lahir' => ['required', 'date'],
+				// 'recaptcha' => 'recaptcha'
+			];
+		} else if (request()->step == 2) {
+			$rules = [
+				'poli' => ['required', 'exists:polis,id'],
+				'tgl_periksa' => ['required', 'date', 'after_or_equal:' . date('Y-m-d')]
+			];
+		}
+
+		return $rules;
 	}
 
 	/**
@@ -30,6 +39,7 @@ class AppointmentRequest extends FormRequest
 	{
 		return [
 			'tgl_lahir' => 'Tanggal lahir',
+			'tgl_periksa' => 'Tanggal periksa'
 		];
 	}
 }

@@ -1,51 +1,47 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <section class="section account-content">
-        <div class="row">
-            <div class="col">
-                <div class="account-box">
-                    <div class="form-group">
-                        <label for="nomor_rekam_medis">
-                            Nomor Rekam Medis<span class="text-red">*</span>
-                        </label>
-                        <div class="input-group">
-                            <input name="nomor_rekam_medis" ref="nomor_rekam_medis" class="form-control"
-                                :class="{'is-invalid': errMessage.nomor_rekam_medis}" placeholder="45-111-FG-G4"
-                                @keyup.enter="searchNomorRekamMedis" @input="toggleClearBtn" />
-                            <button type="button" class="btn bg-transparent btn-clear" v-if="showClearBtn"
-                                @click="clearInput">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="invalid-feedback d-block" v-if="errMessage.nomor_rekam_medis">
-                            <p>{{ errMessage.nomor_rekam_medis[0] }}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="tgl_lahir">
-                            Tanggal Lahir<span class="text-red">*</span>
-                        </label>
-                        <input type="date" name="tgl_lahir" ref="tgl_lahir" class="form-control"
-                            :class="{'is-invalid': errMessage.tgl_lahir}" />
-                        <div class="invalid-feedback d-block" v-if="errMessage.tgl_lahir">
-                            <p>{{ errMessage.tgl_lahir[0] }}</p>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <!-- <vue-recaptcha ref="recaptcha" @verify="setRecaptcha" @error="setRecaptchaError"
-                            :sitekey="recaptchaSiteKey" /> -->
-                        <div class="invalid-feedback d-block" v-if="errMessage.recaptcha">
-                            <p>{{ errMessage.recaptcha[0] }}</p>
-                        </div>
-                    </div>
-                    <div class=" form-group text-center m-b-0">
-                        <button class="account-btn btn btn-primary" @click="searchNomorRekamMedis">
-                            <i class="fa fa-search"></i> Cari
-                        </button>
-                    </div>
+    <div class="col">
+        <div class="account-box">
+            <div class="form-group">
+                <label for="nomor_rekam_medis">
+                    Nomor Rekam Medis<span class="text-red">*</span>
+                </label>
+                <div class="input-group">
+                    <input name="nomor_rekam_medis" ref="nomor_rekam_medis" class="form-control"
+                        :class="{'is-invalid': errMessage.nomor_rekam_medis}" placeholder="721-01-2899"
+                        value="721-01-2899" @keyup.enter="searchNomorRekamMedis" @input="toggleClearBtn" />
+                    <button type="button" class="btn bg-transparent btn-clear" v-if="showClearBtn" @click="clearInput">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+                <div class="invalid-feedback d-block" v-if="errMessage.nomor_rekam_medis">
+                    <p>{{ errMessage.nomor_rekam_medis[0] }}</p>
                 </div>
             </div>
+            <div class="form-group">
+                <label for="tgl_lahir">
+                    Tanggal Lahir<span class="text-red">*</span>
+                </label>
+                <input type="date" name="tgl_lahir" ref="tgl_lahir" class="form-control" value="2001-05-05"
+                    :class="{'is-invalid': errMessage.tgl_lahir}" />
+                <div class="invalid-feedback d-block" v-if="errMessage.tgl_lahir">
+                    <p>{{ errMessage.tgl_lahir[0] }}</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <vue-recaptcha ref="recaptcha" @verify="setRecaptcha" @error="setRecaptchaError"
+                    :sitekey="recaptchaSiteKey" />
+                <div class="invalid-feedback d-block" v-if="errMessage.recaptcha">
+                    <p>{{ errMessage.recaptcha[0] }}</p>
+                </div>
+            </div>
+            <div class=" form-group text-center m-b-0">
+                <button class="account-btn btn btn-primary" @click="searchNomorRekamMedis">
+                    <i class="fa fa-search"></i> Cari
+                </button>
+            </div>
         </div>
-    </section>
+    </div>
 </template>
 
 <script>
@@ -61,8 +57,15 @@
                 errMessage: {},
                 showClearBtn: false,
                 recaptchaSiteKey: import.meta.env.VITE_RECAPTCHA_SITE_KEY,
-                recaptchaToken: null,
+                recaptchaToken: null
             }
+        },
+        mounted() {
+            new Cleave(this.$refs.nomor_rekam_medis, {
+                delimiters: ['-', '-', '-', '-'],
+                blocks: [3, 2, 4],
+                uppercase: true
+            })
         },
         methods: {
             setRecaptcha(response) {
@@ -89,6 +92,7 @@
                     data: {
                         nomor_rekam_medis: $$this.$refs.nomor_rekam_medis.value,
                         tgl_lahir: $$this.$refs.tgl_lahir.value,
+                        step: 1
                         // recaptcha: $$this.recaptchaToken
                     },
                     headers: {
@@ -109,6 +113,9 @@
                             $$this.errMessage = result.errors
                             $$this.$refs.nomor_rekam_medis.focus()
                             $$this.$refs.tgl_lahir = null
+                        } else {
+                            $$this.$emit('setUser', result.data)
+                            $$this.$emit('setCurrentStep', 2)
                         }
                     },
                     error: function (xhr, status, error) {

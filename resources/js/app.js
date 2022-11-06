@@ -6,7 +6,7 @@ import {
 const app = createApp()
 
 //Component
-import Appointment from '@/pages/Appointment.vue'
+import Appointment from '@/pages/AppointmentPage.vue'
 
-app.component('Appointment', Appointment)
+app.component('AppointmentPage', Appointment)
 app.mount('#app')

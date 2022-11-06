@@ -20,7 +20,26 @@ class AppointmentController extends Controller
 
 	public function checkNomorRekamMedis(AppointmentRequest $request)
 	{
-		$validated = $request->validated();
+		if ($request->has('step') && in_array($request->step, [1, 2, 3])) {
+			$validated = $request->validated();
+			if ($request->step == 1) {
+				$response = $this->validateStep1($validated);
+			} else if ($request->step == 2) {
+				$response = [
+					'status' => 200
+				];
+			}
+			return response()->json($response, 200);
+		}
+		$response = [
+			'message' => 'Terjadi Kesalahan.',
+			'status' => 400
+		];
+		return response()->json($response, 400);
+	}
+
+	private function validateStep1($validated)
+	{
 		$user = User::whereNomorRekamMedis($validated['nomor_rekam_medis'])->whereTglLahir($validated['tgl_lahir']);
 		if (!$user->count()) {
 			$response = [
@@ -31,11 +50,17 @@ class AppointmentController extends Controller
 			];
 		} else {
 			$response = [
-				'total'  => $user->count(),
+				'data'  => $user->first([
+					'nama_user',
+					'tgl_lahir',
+					'jk',
+					'alamat',
+					'no_hp'
+				]),
 				'status' => 200
 			];
 		}
-		return response()->json($response, 200);
+		return $response;
 	}
 
 	/**
