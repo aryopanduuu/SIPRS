@@ -15,11 +15,24 @@
                             <ul class="nav navbar-nav main-nav float-right ml-auto">
                                 @foreach ($menu as $item)
                                 @if ($item['hasChild'])
-                                <li class="nav-item{{ Request::segment(1) == $item['name'] ? ' active' : null }}">
+                                <li
+                                    class="nav-item{{ Request::segment(1) == $item['name'] ? ' active' : null }}@if(isset($item['subMenu'])) dropdown @endif">
                                     @else
-                                <li class="nav-item{{ Route::currentRouteName() == $item['name'] ? ' active' : null }}">
+                                <li
+                                    class="nav-item{{ Route::currentRouteName() == $item['name'] ? ' active' : null }}@if(isset($item['subMenu'])) dropdown @endif">
                                     @endif
+                                    @if(isset($item['subMenu']))
+                                    <a class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                        {{ $item['title'] }} <b class="caret"></b>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        @foreach ($item['subMenu'] as $sub)
+                                        <a class="dropdown-item" href="{{ $sub['url'] }}">{{ $sub['title'] }}</a>
+                                        @endforeach
+                                    </div>
+                                    @else
                                     <a href="{{ $item['url'] }}" class="nav-link">{{ $item['title'] }}</a>
+                                    @endif
                                 </li>
                                 @endforeach
                                 <li class="nav-item">
