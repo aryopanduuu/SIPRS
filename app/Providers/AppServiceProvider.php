@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
 					'hasChild' => false
 				],
 				[
-					'url' => '',
+					'url' => route('tentang'),
 					'title' => 'Tentang',
 					'name'     => 'tentang',
 					'hasChild' => false,
