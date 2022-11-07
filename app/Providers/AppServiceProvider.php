@@ -39,7 +39,13 @@ class AppServiceProvider extends ServiceProvider
 					'url' => '',
 					'title' => 'Tentang',
 					'name'     => 'tentang',
-					'hasChild' => false
+					'hasChild' => false,
+					'subMenu'  => [
+						[
+							'url' => '',
+							'title' => 'Visi & Misi',
+						]
+					]
 				],
 				[
 					'url' => route('poli'),
