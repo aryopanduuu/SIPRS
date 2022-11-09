@@ -15,7 +15,7 @@ return new class extends Migration
 	{
 		Schema::create('user_pasiens', function (Blueprint $table) {
 			$table->char('nomor_rekam_medis', 11)->unique();
-			$table->bigInteger('user_id')->unsigned()->unique()->index();
+			$table->uuid('user_id')->unique()->index();
 			$table->timestamps();
 			$table->foreign('user_id')->references('id')->on('users');
 		});

@@ -15,7 +15,7 @@ return new class extends Migration
 	{
 		Schema::create('user_dokters', function (Blueprint $table) {
 			$table->char('nip', 18)->unique();
-			$table->bigInteger('user_id')->unsigned()->unique()->index();
+			$table->uuid('user_id')->unique()->index();
 			$table->timestamps();
 			$table->foreign('user_id')->references('id')->on('users');
 		});

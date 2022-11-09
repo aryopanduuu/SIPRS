@@ -13,12 +13,13 @@ return new class extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('jadwals', function (Blueprint $table) {
-			$table->uuid('id')->primary();
-			$table->uuid('poli_id');
-			$table->enum('hari', ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu']);
+		Schema::create('user_dokter_spesialis', function (Blueprint $table) {
+			$table->uuid('user_id');
+			$table->uuid('spesialis_id');
 			$table->timestamps();
-			$table->foreign('poli_id')->references('id')->on('polis');
+			$table->foreign('user_id')->references('id')->on('users');
+			$table->foreign('spesialis_id')->references('id')->on('spesialis');
+			$table->softDeletes();
 		});
 	}
 
@@ -29,6 +30,6 @@ return new class extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('jadwals');
+		Schema::dropIfExists('user_dokter_spesialis');
 	}
 };
