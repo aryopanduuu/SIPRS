@@ -6,29 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('jadwal_liburs', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('id_jadwal')->unsigned();
-            $table->date('tanggal');
-            $table->timestamps();
-            $table->foreign('id_jadwal')->references('id')->on('jadwals');
-        });
-    }
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('jadwal_liburs', function (Blueprint $table) {
+			$table->uuid('jadwal_id');
+			$table->date('tanggal');
+			$table->timestamps();
+			$table->foreign('jadwal_id')->references('id')->on('jadwals');
+		});
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('jadwal_liburs');
-    }
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::dropIfExists('jadwal_liburs');
+	}
 };
