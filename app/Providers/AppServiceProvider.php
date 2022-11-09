@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
 					'hasChild' => false,
 					'subMenu'  => [
 						[
-							'url' => '',
+							'url' =>  route('tentang'),
 							'title' => 'Visi & Misi',
 						]
 					]
