@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Models\Poli;
 use App\Models\Spesialis;
+use App\Models\User;
 use App\Models\UserDokter;
 use App\Models\UserPasien;
 use Illuminate\Database\Seeder;

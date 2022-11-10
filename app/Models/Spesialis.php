@@ -21,14 +21,4 @@ class Spesialis extends Model
 	{
 		return $this->hasMany(UserDokterSpesialis::class);
 	}
-
-	/**
-	 * Get the user associated with the UserDokterSpesialis
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\HasOneThrough
-	 */
-	public function userDetail(): HasOneThrough
-	{
-		return $this->HasOneThrough(UserDokterSpesialis::class, User::class);
-	}
 }

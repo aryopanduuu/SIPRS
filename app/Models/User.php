@@ -53,12 +53,12 @@ class User extends Model
 	}
 
 	/**
-	 * Get the spesialis associated with the UserDokterSpesialis
+	 * Get the poli associated with the User
 	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\HasOneThrough
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
 	 */
-	public function spesialisDetail(): HasOneThrough
+	public function poli(): HasOne
 	{
-		return $this->HasOneThrough(UserDokterSpesialis::class, Spesialis::class);
+		return $this->hasOne(UserDokterPoli::class);
 	}
 }

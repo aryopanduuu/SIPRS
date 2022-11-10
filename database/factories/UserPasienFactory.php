@@ -23,12 +23,6 @@ class UserPasienFactory extends Factory
 		return [
 			'nomor_rekam_medis' => fake()->unique()->numerify('###-##-####'),
 			'user_id' => User::factory()
-				->has(UserDokterSpesialis::factory()->count(2)
-					->state(
-						new Sequence(
-							fn ($sequence) => ['spesialis_id' => Spesialis::all()->random()],
-						)
-					), 'spesialis')
 		];
 	}
 }
