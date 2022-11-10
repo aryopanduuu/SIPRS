@@ -25,6 +25,10 @@ class AppointmentRequest extends FormRequest
 				'poli' => ['required', 'exists:polis,id'],
 				'tgl_periksa' => ['required', 'date', 'after_or_equal:' . date('Y-m-d')]
 			];
+		} else if (request()->step == 3) {
+			$rules = [
+				'dokter' => ['required', 'exists:user_dokters,user_id']
+			];
 		}
 
 		return $rules;

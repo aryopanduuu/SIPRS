@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AppointmentRequest;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -40,7 +41,9 @@ class AppointmentController extends Controller
 
 	private function validateStep1($validated)
 	{
-		$user = User::whereNomorRekamMedis($validated['nomor_rekam_medis'])->whereTglLahir($validated['tgl_lahir']);
+		$user = User::whereTglLahir($validated['tgl_lahir'])->whereHas('pasien', function (Builder $query) use ($validated) {
+			$query->where('nomor_rekam_medis', $validated['nomor_rekam_medis']);
+		});
 		if (!$user->count()) {
 			$response = [
 				'errors' => [
@@ -51,7 +54,8 @@ class AppointmentController extends Controller
 		} else {
 			$response = [
 				'data'  => $user->first([
-					'nama_user',
+					'id',
+					'nama',
 					'tgl_lahir',
 					'jk',
 					'alamat',

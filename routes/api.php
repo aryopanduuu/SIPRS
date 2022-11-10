@@ -19,3 +19,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('/getPoli', 'PoliController@index')->name('poli');
+Route::post('/getDokter', 'DokterController@index')->name('dokter');

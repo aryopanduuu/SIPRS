@@ -2,8 +2,9 @@
     <section class="section account-content">
         <div class="row justify-content-md-center">
             <AppointmentStep1 @set-current-step="setCurrentStep" @set-user="setUser" v-if="currentStep == 1" />
-            <AppointmentStep2 @set-current-step="setCurrentStep" :user="user" v-if="currentStep == 2" />
-            <AppointmentStep3 @set-current-step="setCurrentStep" v-if="currentStep == 3" />
+            <AppointmentStep2 @set-current-step="setCurrentStep" @set-appointment="setAppointment" :user="user"
+                :appointment="appointment" v-if="currentStep == 2" />
+            <AppointmentStep3 @set-current-step="setCurrentStep" :appointment="appointment" v-if="currentStep == 3" />
         </div>
     </section>
 </template>
@@ -21,19 +22,29 @@
         data() {
             return {
                 currentStep: 1,
-                listPoli: ['op1', 'op2', 'op3'],
+                appointment: {},
                 user: {}
+            }
+        },
+        watch: {
+            currentStep(newValue, oldValue) {
+                if (newValue == 1) {
+                    this.user = {}
+                }
+                if (newValue == 2 && oldValue == 1) {
+                    this.appointment = {}
+                }
             }
         },
         methods: {
             setCurrentStep(step) {
                 this.currentStep = step
-                if (step == 1) {
-                    this.user = {}
-                }
             },
             setUser(user) {
                 this.user = user
+            },
+            setAppointment(appointment) {
+                this.appointment = appointment
             }
         }
     }

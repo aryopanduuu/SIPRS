@@ -8,8 +8,8 @@
                 </label>
                 <div class="input-group">
                     <input name="nomor_rekam_medis" ref="nomor_rekam_medis" class="form-control"
-                        :class="{'is-invalid': errMessage.nomor_rekam_medis}" placeholder="721-01-2899"
-                        value="721-01-2899" @keyup.enter="searchNomorRekamMedis" @input="toggleClearBtn" />
+                        :class="{'is-invalid': errMessage.nomor_rekam_medis}" placeholder="001-51-5464"
+                        value="001-51-5464" @keyup.enter="searchNomorRekamMedis" @input="toggleClearBtn" />
                     <button type="button" class="btn bg-transparent btn-clear" v-if="showClearBtn" @click="clearInput">
                         <i class="fa fa-times"></i>
                     </button>
@@ -22,19 +22,19 @@
                 <label for="tgl_lahir">
                     Tanggal Lahir<span class="text-red">*</span>
                 </label>
-                <input type="date" name="tgl_lahir" ref="tgl_lahir" class="form-control" value="2001-05-05"
-                    :class="{'is-invalid': errMessage.tgl_lahir}" />
+                <input type="date" name="tgl_lahir" ref="tgl_lahir" class="form-control" value="1961-07-29"
+                    :class="{'is-invalid': errMessage.tgl_lahir}" @keyup.enter="searchNomorRekamMedis" />
                 <div class="invalid-feedback d-block" v-if="errMessage.tgl_lahir">
                     <p>{{ errMessage.tgl_lahir[0] }}</p>
                 </div>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <vue-recaptcha ref="recaptcha" @verify="setRecaptcha" @error="setRecaptchaError"
                     :sitekey="recaptchaSiteKey" />
                 <div class="invalid-feedback d-block" v-if="errMessage.recaptcha">
                     <p>{{ errMessage.recaptcha[0] }}</p>
                 </div>
-            </div>
+            </div> -->
             <div class=" form-group text-center m-b-0">
                 <button class="account-btn btn btn-primary" @click="searchNomorRekamMedis">
                     <i class="fa fa-search"></i> Cari
@@ -49,9 +49,9 @@
         VueRecaptcha
     } from 'vue-recaptcha';
     export default {
-        components: {
-            VueRecaptcha
-        },
+        // components: {
+        // VueRecaptcha
+        // },
         data() {
             return {
                 errMessage: {},

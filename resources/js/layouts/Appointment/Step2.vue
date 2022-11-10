@@ -11,7 +11,7 @@
                         <tbody>
                             <tr>
                                 <th>Nama</th>
-                                <td>{{ user.nama_user }}</td>
+                                <td>{{ user.nama }}</td>
                             </tr>
                             <tr>
                                 <th>Tanggal Lahir</th>
@@ -42,7 +42,8 @@
                             </label>
                             <select name="poli" ref="poli" class="select">
                                 <option value="" disabled selected>Pilih</option>
-                                <option v-for="(poli, i) in listPoli" :value="poli.id" :key="i">
+                                <option v-for="(poli, i) in listPoli" :value="poli.id" :key="i"
+                                    :selected="poli.id == appointment.poli">
                                     {{ poli.nama_poli }}
                                 </option>
                             </select>
@@ -54,8 +55,8 @@
                             <label for="tgl_periksa">
                                 Tanggal Periksa <span class="text-red">*</span>
                             </label>
-                            <input type="date" class="form-control" ref="tgl_periksa" min="2022-11-04"
-                                :class="{'is-invalid': errMessage.tgl_periksa}">
+                            <input type="date" class="form-control" ref="tgl_periksa" :min="minDate"
+                                :value="appointment.tgl_periksa" :class="{'is-invalid': errMessage.tgl_periksa}">
                             <div class="invalid-feedback d-block" v-if="errMessage.tgl_periksa">
                                 <p>{{ errMessage.tgl_periksa[0] }}</p>
                             </div>
@@ -74,7 +75,8 @@
 <script>
     export default {
         props: {
-            user: Object
+            user: Object,
+            appointment: Object
         },
         data() {
             return {
@@ -94,7 +96,7 @@
         },
         mounted() {
             const date = new Date()
-            let day = date.getDate() > 9 ? "0" + date.getDate() : date.getDate()
+            let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
             let month = date.getMonth() + 1
             let year = date.getFullYear()
             this.minDate = `${year}-${month}-${day}`
@@ -123,14 +125,15 @@
             setScheduleAppointment() {
                 this.errMessage = {}
                 Notiflix.Block.standard('.box-form')
+                const data = {
+                    poli: this.$refs.poli.value,
+                    tgl_periksa: this.$refs.tgl_periksa.value,
+                    step: 2
+                }
                 axios({
                         method: 'POST',
                         url: '',
-                        data: {
-                            poli: this.$refs.poli.value,
-                            tgl_periksa: this.$refs.tgl_periksa.value,
-                            step: 2
-                        },
+                        data: data,
                         headers: {
                             'X-Dry-Run': true,
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -138,6 +141,8 @@
                     })
                     .then((result) => {
                         if (result.data.status == 200) {
+                            delete data.step
+                            this.$emit('setAppointment', data)
                             this.$emit('setCurrentStep', 3)
                         }
                     })
