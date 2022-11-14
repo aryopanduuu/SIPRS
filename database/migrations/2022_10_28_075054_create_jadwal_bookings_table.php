@@ -16,12 +16,12 @@ return new class extends Migration
 		Schema::create('jadwal_bookings', function (Blueprint $table) {
 			$table->string('kode_booking');
 			$table->uuid('user_id');
-			$table->uuid('jadwal_id');
+			// $table->uuid('jadwal_id');
 			$table->dateTime('tgl_waktu');
 			$table->enum('status', ['booking', 'in', 'out']);
 			$table->timestamps();
 			$table->foreign('user_id')->references('id')->on('users');
-			$table->foreign('jadwal_id')->references('id')->on('jadwals');
+			// $table->foreign('jadwal_id')->references('id')->on('jadwals');
 		});
 	}
 

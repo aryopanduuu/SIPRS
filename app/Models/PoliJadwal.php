@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class UserDokter extends Model
+class PoliJadwal extends Model
 {
 	use HasFactory;
 
 	/**
-	 * Get the user that owns the userDokter
+	 * Get the poli that owns the PoliJadwal
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
 	 */
-	public function user(): BelongsTo
+	public function poli(): BelongsTo
 	{
-		return $this->belongsTo(User::class, 'user_id', 'id');
+		return $this->belongsTo(Poli::class);
 	}
 }

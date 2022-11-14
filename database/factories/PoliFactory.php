@@ -28,9 +28,7 @@ class PoliFactory extends Factory
 				'POLI SYARAF',
 				'POLI PARU',
 				'POLI JANTUNG DAN PEMBULUH DARAH'
-			]))),
-			'jam_buka'  => mt_rand(8, 10) . ":" . fake()->randomElement([10, 15, 20, 25, 30, 35, 45, 00]),
-			'jam_tutup' => mt_rand(16, 23) . ":" . fake()->randomElement([10, 15, 20, 25, 30, 35, 45, 00]),
+			])))
 		];
 	}
 }

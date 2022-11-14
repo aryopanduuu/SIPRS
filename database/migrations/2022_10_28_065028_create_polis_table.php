@@ -16,8 +16,6 @@ return new class extends Migration
 		Schema::create('polis', function (Blueprint $table) {
 			$table->uuid('id')->primary();
 			$table->string('nama_poli', 100);
-			$table->time('jam_buka');
-			$table->time('jam_tutup');
 			$table->timestamps();
 		});
 	}
