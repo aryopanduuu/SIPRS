@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +20,15 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::post('/getPoli', 'PoliController@index')->name('poli');
-Route::post('/getDokter', 'DokterController@index')->name('dokter');
+Route::post('/getJamKerjaPoli', 'PoliController@jamKerja')->name('jam-kerja-poli');
+
+Route::prefix('dokter')->name('dokter.')->group(function () {
+	Route::post('getListDokter', 'DokterController@index')->name('listDokter');
+	Route::post('checkDokterExists', 'DokterController@checkDokterExists')->name('checkDokterExists');
+});
+
+Route::prefix('appointment')->name('appointment.')->group(function () {
+	Route::post('checkNomorRekamMedis', 'AppointmentController@checkNomorRekamMedis')->name('checkNomorRekamMedis');
+	Route::post('checkTglPemesanan', 'AppointmentController@checkTglPemeriksaan')->name('checkTglPemeriksaan');
+	Route::post('setAppointment', 'AppointmentController@store')->name('store');
+});

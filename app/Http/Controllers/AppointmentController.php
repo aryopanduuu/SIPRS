@@ -16,55 +16,16 @@ class AppointmentController extends Controller
 	 */
 	public function index()
 	{
-		return view('pages.appointment');
+		return view('pages.pendaftaran-online.index');
 	}
-
-	public function checkNomorRekamMedis(AppointmentRequest $request)
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function pasienLama()
 	{
-		if ($request->has('step') && in_array($request->step, [1, 2, 3])) {
-			$validated = $request->validated();
-			if ($request->step == 1) {
-				$response = $this->validateStep1($validated);
-			} else if ($request->step == 2) {
-				$response = [
-					'status' => 200
-				];
-			}
-			return response()->json($response, 200);
-		}
-		$response = [
-			'message' => 'Terjadi Kesalahan.',
-			'status' => 400
-		];
-		return response()->json($response, 400);
-	}
-
-	private function validateStep1($validated)
-	{
-		$user = User::whereTglLahir($validated['tgl_lahir'])->whereHas('pasien', function (Builder $query) use ($validated) {
-			$query->where('nomor_rekam_medis', $validated['nomor_rekam_medis']);
-		});
-		if (!$user->count()) {
-			$response = [
-				'errors' => [
-					'nomor_rekam_medis' => ['Data nomor rekam medis tidak ditemukan.']
-				],
-				'status' => 404
-			];
-		} else {
-			$response = [
-				'data'  => $user->first([
-					'id',
-					'nama',
-					'tgl_lahir',
-					'jk',
-					'alamat',
-					'no_hp'
-				]),
-				'status' => 200
-			];
-		}
-		return $response;
+		return view('pages.pendaftaran-online.appointment');
 	}
 
 	/**

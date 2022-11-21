@@ -12,8 +12,8 @@
 
 @push('custom-js')
 <script src="{{ asset('assets/js/select2.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/notiflix@3.2.5/dist/notiflix-block-aio-3.2.5.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+<script src="{{ asset('assets/js/sweetalert2.all.min.js') }}"></script>
+<script src="{{ asset('assets/js/notiflix-block-aio-3.2.5.min.js') }}"></script>
+<script src="{{ asset('assets/js/cleave.min.js') }}"></script>
 @vite('resources/js/app.js')
 @endpush
