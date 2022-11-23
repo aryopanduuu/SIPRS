@@ -15,6 +15,10 @@ Route::get('/tentang', function () {
 Route::prefix('pendaftaran-online')->name('appointment.')->group(function () {
 	Route::get('/', 'AppointmentController@index')->name('index');
 	Route::get('ticket/{id}', 'AppointmentController@show')->name('show');
+	Route::get('ticket/print/{id}', 'AppointmentController@print')->name('print');
+	Route::post('ticket/pdf/{id}', 'AppointmentController@pdf')->name('pdf');
+	Route::get('ticket/qrcode/{id}', 'AppointmentController@qrcode')->name('qrcode');
+	Route::get('ticket/whatsapp/{id}', 'AppointmentController@whatsapp')->name('whatsapp');
 	Route::prefix('pasien-lama')->name('pasien-lama.')->group(function () {
 		Route::get('/', 'AppointmentController@pasienLama')->name('index');
 		Route::post('/', 'AppointmentController@checkNomorRekamMedis')->name('search');

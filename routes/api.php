@@ -31,4 +31,5 @@ Route::prefix('appointment')->name('appointment.')->group(function () {
 	Route::post('checkNomorRekamMedis', 'AppointmentController@checkNomorRekamMedis')->name('checkNomorRekamMedis');
 	Route::post('checkTglPemesanan', 'AppointmentController@checkTglPemeriksaan')->name('checkTglPemeriksaan');
 	Route::post('setAppointment', 'AppointmentController@store')->name('store');
+	Route::post('ticket/email', 'AppointmentController@sendEmailTicket')->name('sendEmailTicket');
 });

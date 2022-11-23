@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 use sirajcse\UniqueIdGenerator\UniqueIdGenerator;
 
@@ -13,6 +16,50 @@ class UserBooking extends Model
 	use HasFactory, HasUuids;
 
 	protected $guarded = [];
+
+	public function perkiraanJam(): Attribute
+	{
+		return new Attribute(
+			get: fn ($value) => date('H:i', strtotime($value)),
+		);
+	}
+
+	public function TglPeriksa(): Attribute
+	{
+		return new Attribute(
+			get: fn ($value) => Carbon::parse($value)->locale('id-ID')->translatedFormat('l, d F Y'),
+		);
+	}
+
+	/**
+	 * Get the user dokter that owns the UserBooking
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function userDokter(): BelongsTo
+	{
+		return $this->belongsTo(User::class, 'dokter_id', 'id')->has('dokter');
+	}
+
+	/**
+	 * Get the user pasien that owns the UserBooking
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function userPasien(): BelongsTo
+	{
+		return $this->belongsTo(User::class, 'user_id', 'id')->has('pasien');
+	}
+
+	/**
+	 * Get the poli that owns the UserBooking
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+	 */
+	public function poli(): BelongsTo
+	{
+		return $this->belongsTo(Poli::class, 'poli_id', 'id');
+	}
 
 	public static function bookingLatestAntrianByDay($poli, $dokter, $tgl_periksa)
 	{

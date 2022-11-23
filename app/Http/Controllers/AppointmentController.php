@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AppointmentRequest;
 use App\Models\User;
+use App\Models\UserBooking;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Milon\Barcode\Facades\DNS2DFacade;
+use Twilio\Rest\Client;
 
 class AppointmentController extends Controller
 {
@@ -55,9 +59,39 @@ class AppointmentController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id)
+	public function show($kode)
 	{
-		//
+		$data = UserBooking::where('kode_antrian', $kode)->first();
+		return view('pages.pendaftaran-online.show', compact('data'));
+	}
+
+	public function print($kode)
+	{
+		$data = UserBooking::where('kode_antrian', $kode)->firstOrFail();
+		$needTemplate = true;
+		return view('pages.pendaftaran-online.export', compact('data', 'needTemplate'));
+	}
+
+	public function pdf($kode)
+	{
+		$data = UserBooking::where('kode_antrian', $kode)->firstOrFail();
+		$needTemplate = true;
+		$pdf = Pdf::loadView('pages.pendaftaran-online.export', ['data' => $data, 'needTemplate' => $needTemplate]);
+		return $pdf->download('Tiket Antrian-' . $data->kode_antrian . '.pdf');
+	}
+
+	public function qrcode($kode)
+	{
+		$data = UserBooking::where('kode_antrian', $kode)->firstOrFail();
+		$qr = DNS2DFacade::getBarcodeSVG(
+			route('appointment.show', $data->kode_antrian),
+			'QRCODE'
+		);
+		return $qr;
+	}
+
+	public function whatsapp($kode)
+	{
 	}
 
 	/**

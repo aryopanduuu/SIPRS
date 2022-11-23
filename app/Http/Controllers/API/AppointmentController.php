@@ -5,12 +5,15 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\NomorRekamMedisRequest;
 use App\Http\Requests\AppointmentRequest;
+use App\Http\Requests\sendEmailTicketRequest;
 use App\Http\Requests\TglPemeriksaanRequest;
+use App\Mail\TiketAntrian;
 use App\Models\PoliJadwal;
 use App\Models\User;
 use App\Models\UserBooking;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class AppointmentController extends Controller
@@ -127,5 +130,14 @@ class AppointmentController extends Controller
 	public function destroy($id)
 	{
 		//
+	}
+
+	public function sendEmailTicket(sendEmailTicketRequest $request)
+	{
+		$validated = $request->validated();
+		$data = UserBooking::where('kode_antrian', $validated['kode_antrian'])->first();
+		Mail::to($validated['email'])
+			->send(new TiketAntrian($data));
+		return response()->json([], 200);
 	}
 }
