@@ -4,11 +4,41 @@
 <section class="section account-content">
     <div class="row justify-content-md-center">
         <div class="col-md-8 col-12">
-            <a href="{{ route('appointment.index') }}">
-                <span class="font-weight-bold"><i class="fa fa-arrow-left"></i> Kembali</span>
-            </a>
-            <div class="row mt-3">
-                <div class="col-12 mb-3 mb-lg-0">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-between align-items-end">
+                    <a href="{{ route('appointment.index') }}">
+                        <span class="font-weight-bold"><i class="fa fa-arrow-left"></i> Kembali</span>
+                    </a>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa-duotone fa-share-all"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item"
+                                {{-- href="data:image/png;base64,{{ DNS2D::getBarcodePNG(route('appointment.show', $data->kode_antrian), 'QRCODE') }}"
+                                --}} href="{{ route('appointment.qrcode', $data->kode_antrian) }}"
+                                download="Tiket Antrian-{{ $data->kode_antrian }}.png">
+                                <i class="fa-duotone fa-file-download"></i> Unduh QR Code
+                            </a>
+                            <button class="dropdown-item"
+                                onclick="window.open(`{{ route('appointment.print', $data->kode_antrian) }}`)">
+                                <i class="fa-duotone fa-print"></i> Print
+                            </button>
+                            {!! Form::open(['route' => ['appointment.pdf', $data->kode_antrian]]) !!}
+                            <button class="dropdown-item">
+                                <i class="fa-duotone fa-file-pdf"></i> PDF
+                            </button>
+                            {!! Form::close() !!}
+                            <a class="dropdown-item" href="{{ route('appointment.whatsapp', $data->kode_antrian) }}">
+                                <i class="fa-brands fa-whatsapp"></i> Whatsapp
+                            </a>
+                            <button class="dropdown-item" id="showEmailForm">
+                                <i class="fa-duotone fa-envelope"></i> Email
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-3 mb-3 mb-lg-0">
                     <div class="account-box w-100">
                         <table class="table table-borderless">
                             <thead>
@@ -56,51 +86,12 @@
                             <tfoot>
                                 <tr align="center">
                                     <td colspan="3" class="pb-0">
-                                        {!! DNS2D::getBarcodeSVG(route('appointment.show', $data->kode_antrian),
-                                        'QRCODE')
-                                        !!}
+                                        {!! DNS2D::getBarcodeHTML(route('appointment.show', $data->kode_antrian),
+                                        'QRCODE', 4, 4) !!}
                                     </td>
                                 </tr>
                             </tfoot>
                         </table>
-                    </div>
-                    <div class="text-center mt-3">
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa-duotone fa-file-export"></i> Export
-                            </button>
-                            <div class="dropdown-menu">
-                                <button class="dropdown-item"
-                                    onclick="window.open(`{{ route('appointment.print', $data->kode_antrian) }}`)">
-                                    <i class="fa-duotone fa-print"></i> Print
-                                </button>
-                                {!! Form::open(['route' => ['appointment.pdf', $data->kode_antrian]]) !!}
-                                <button class="dropdown-item">
-                                    <i class="fa-duotone fa-file-pdf"></i> PDF
-                                </button>
-                                {!! Form::close() !!}
-                            </div>
-                        </div>
-                        <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa-duotone fa-share-all"></i> Send
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item"
-                                    href="{{ route('appointment.whatsapp', $data->kode_antrian) }}">
-                                    <i class="fa-brands fa-whatsapp"></i> Whatsapp
-                                </a>
-                                <button class="dropdown-item" id="showEmailForm">
-                                    <i class="fa-duotone fa-envelope"></i> Email
-                                </button>
-                            </div>
-                        </div>
-                        <a href="data:image/png;base64,{{ DNS2D::getBarcodePNG(route('appointment.show', $data->kode_antrian), 'QRCODE') }}"
-                            download="Tiket Antrian-{{ $data->kode_antrian }}.png">
-                            <button class="btn btn-dark">
-                                <i class="fa-duotone fa-image"></i> Unduh QR Code
-                            </button>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -114,7 +105,7 @@
 <script>
     $('#showEmailForm').on('click', function () {
         Swal.fire({
-                title: 'Masukkan email anda',
+                title: 'Masukkan Email Anda',
                 input: 'text',
                 showCancelButton: true,
                 confirmButtonText: 'Kirim',

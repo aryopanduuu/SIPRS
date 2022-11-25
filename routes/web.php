@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\poliController;
-use Illuminate\Mail\Mailables\Content;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

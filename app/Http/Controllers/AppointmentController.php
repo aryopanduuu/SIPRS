@@ -9,6 +9,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Milon\Barcode\Facades\DNS2DFacade;
+use Intervention\Image\ImageManagerStatic as Image;
 use Twilio\Rest\Client;
 
 class AppointmentController extends Controller
@@ -61,7 +62,7 @@ class AppointmentController extends Controller
 	 */
 	public function show($kode)
 	{
-		$data = UserBooking::where('kode_antrian', $kode)->first();
+		$data = UserBooking::where('kode_antrian', $kode)->firstOrFail();
 		return view('pages.pendaftaran-online.show', compact('data'));
 	}
 
@@ -83,10 +84,9 @@ class AppointmentController extends Controller
 	public function qrcode($kode)
 	{
 		$data = UserBooking::where('kode_antrian', $kode)->firstOrFail();
-		$qr = DNS2DFacade::getBarcodeSVG(
-			route('appointment.show', $data->kode_antrian),
-			'QRCODE'
-		);
+		$qr = Image::canvas(300, 320, "#fff")
+			->insert(DNS2DFacade::getBarcodePNG(route('appointment.show', $kode), 'QRCODE', 9, 9), 'center')
+			->response('png', 100);
 		return $qr;
 	}
 
