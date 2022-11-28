@@ -12,6 +12,15 @@ class Poli extends Model
 	use HasFactory, HasUuids;
 
 	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = ['nama_poli'];
+
+
+
+	/**
 	 * Get all of the jadwal for the Poli
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
