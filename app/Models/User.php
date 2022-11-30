@@ -15,10 +15,24 @@ class User extends Model
 {
 	use HasFactory, HasUuids;
 
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = ['nik', 'nama', 'jk', 'tgl_lahir', 'alamat', 'email', 'no_hp'];
+
 	public function jk(): Attribute
 	{
 		return Attribute::make(
 			get: fn ($value) => ucfirst($value)
+		);
+	}
+
+	public function jkInput(): Attribute
+	{
+		return Attribute::make(
+			get: fn ($value, $attributes) => $attributes['jk']
 		);
 	}
 

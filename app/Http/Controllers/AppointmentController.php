@@ -4,8 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AppointmentRequest;
 use App\Models\User;
+use App\Models\UserBooking;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Milon\Barcode\Facades\DNS2DFacade;
+use Intervention\Image\ImageManagerStatic as Image;
+use Twilio\Rest\Client;
 
 class AppointmentController extends Controller
 {
@@ -16,55 +21,16 @@ class AppointmentController extends Controller
 	 */
 	public function index()
 	{
-		return view('pages.appointment');
+		return view('pages.pendaftaran-online.index');
 	}
-
-	public function checkNomorRekamMedis(AppointmentRequest $request)
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function pasienLama()
 	{
-		if ($request->has('step') && in_array($request->step, [1, 2, 3])) {
-			$validated = $request->validated();
-			if ($request->step == 1) {
-				$response = $this->validateStep1($validated);
-			} else if ($request->step == 2) {
-				$response = [
-					'status' => 200
-				];
-			}
-			return response()->json($response, 200);
-		}
-		$response = [
-			'message' => 'Terjadi Kesalahan.',
-			'status' => 400
-		];
-		return response()->json($response, 400);
-	}
-
-	private function validateStep1($validated)
-	{
-		$user = User::whereTglLahir($validated['tgl_lahir'])->whereHas('pasien', function (Builder $query) use ($validated) {
-			$query->where('nomor_rekam_medis', $validated['nomor_rekam_medis']);
-		});
-		if (!$user->count()) {
-			$response = [
-				'errors' => [
-					'nomor_rekam_medis' => ['Data nomor rekam medis tidak ditemukan.']
-				],
-				'status' => 404
-			];
-		} else {
-			$response = [
-				'data'  => $user->first([
-					'id',
-					'nama',
-					'tgl_lahir',
-					'jk',
-					'alamat',
-					'no_hp'
-				]),
-				'status' => 200
-			];
-		}
-		return $response;
+		return view('pages.pendaftaran-online.appointment');
 	}
 
 	/**
@@ -94,9 +60,38 @@ class AppointmentController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id)
+	public function show($kode)
 	{
-		//
+		$data = UserBooking::where('kode_antrian', $kode)->firstOrFail();
+		return view('pages.pendaftaran-online.show', compact('data'));
+	}
+
+	public function print($kode)
+	{
+		$data = UserBooking::where('kode_antrian', $kode)->firstOrFail();
+		$needTemplate = true;
+		return view('pages.pendaftaran-online.export', compact('data', 'needTemplate'));
+	}
+
+	public function pdf($kode)
+	{
+		$data = UserBooking::where('kode_antrian', $kode)->firstOrFail();
+		$needTemplate = true;
+		$pdf = Pdf::loadView('pages.pendaftaran-online.export', ['data' => $data, 'needTemplate' => $needTemplate]);
+		return $pdf->download('Tiket Antrian-' . $data->kode_antrian . '.pdf');
+	}
+
+	public function qrcode($kode)
+	{
+		$data = UserBooking::where('kode_antrian', $kode)->firstOrFail();
+		$qr = Image::canvas(300, 320, "#fff")
+			->insert(DNS2DFacade::getBarcodePNG(route('appointment.show', $kode), 'QRCODE', 9, 9), 'center')
+			->response('png', 100);
+		return $qr;
+	}
+
+	public function whatsapp($kode)
+	{
 	}
 
 	/**

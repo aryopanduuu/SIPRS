@@ -5,7 +5,7 @@
                 <div class="col-md-2 float-left">
                     <div class="logo">
                         <a href="{{ route('home') }}">
-                            <img alt="Logo" src="assets/img/logo.png" width="56" height="50">
+                            <img alt="Logo" src="{{ asset('assets/img/logo.png') }}" width="56" height="50">
                         </a>
                     </div>
                 </div>
@@ -55,6 +55,6 @@
     </div>
     <div class="page_title">
         <a href="{{ route('home') }}">
-            <img src="assets/img/logo.png" alt="Logo" class="img-fluid" width="60" height="60"></a>
+            <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" class="img-fluid" width="60" height="60"></a>
     </div>
 </header>

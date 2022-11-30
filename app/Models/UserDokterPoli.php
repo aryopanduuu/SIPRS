@@ -17,7 +17,7 @@ class UserDokterPoli extends Model
 	 */
 	public function poliDetail(): BelongsTo
 	{
-		return $this->belongsTo(Poli::class);
+		return $this->belongsTo(Poli::class, 'poli_id', 'id');
 	}
 
 	/**
@@ -27,6 +27,6 @@ class UserDokterPoli extends Model
 	 */
 	public function userDetail(): BelongsTo
 	{
-		return $this->belongsTo(User::class);
+		return $this->belongsTo(User::class, 'user_id', 'id');
 	}
 }

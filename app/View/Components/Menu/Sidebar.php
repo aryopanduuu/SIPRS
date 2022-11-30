@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Menu;
 
+use Illuminate\Support\Facades\Request;
 use Illuminate\View\Component;
 
 class Sidebar extends Component
@@ -23,6 +24,11 @@ class Sidebar extends Component
 	 */
 	public function render()
 	{
-		return view('components.menu.sidebar');
+		if (Request::segment(1) != 'admin') {
+			$view = 'components.menu.sidebar';
+		} else {
+			$view = 'components.menu.admin.sidebar';
+		}
+		return view($view);
 	}
 }

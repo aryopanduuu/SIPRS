@@ -13,6 +13,13 @@ class Spesialis extends Model
 	use HasFactory, HasUuids;
 
 	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = ['gelar', 'gelar_singkatan'];
+
+	/**
 	 * Get all of the user for the Spesialis
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\HasMany

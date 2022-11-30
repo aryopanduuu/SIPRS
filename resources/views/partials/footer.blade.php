@@ -40,29 +40,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3">
-                    <div class="footer-widget">
-                        <h4 class="footer-title">Blog</h4>
-                        <ul class="footer-menu">
-                            <li>
-                                <a href="blog.html">Right Sidebar</a>
-                            </li>
-                            <li>
-                                <a href="blog-left-sidebar.html">Left Sidebar</a>
-                            </li>
-                            <li>
-                                <a href="blog-full-width.html">Full Width</a>
-                            </li>
-                            <li>
-                                <a href="blog-grid.html">Blog Grid</a>
-                            </li>
-                            <li>
-                                <a href="blog-details.html">Blog Details</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3">
+                <div class="col-lg-3 col-md-3 ml-auto">
                     <div class="footer-widget">
                         <h4 class="footer-title">Appointment</h4>
                         <div class="appointment-btn">
