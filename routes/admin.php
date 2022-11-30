@@ -20,3 +20,18 @@ Route::prefix('spesialis')->name('spesialis.')->group(function () {
 	Route::patch('ubah/{id}', 'SpesialisController@update')->name('update');
 	Route::get('{id}/dokter', 'SpesialisController@show')->name('show');
 });
+
+Route::prefix('dokter')->name('dokter.')->group(function () {
+	Route::get('/', 'DokterController@index')->name('index');
+	Route::get('tambah', 'DokterController@create')->name('create');
+	Route::post('tambah', 'DokterController@store')->name('store');
+	Route::get('ubah/{id}', 'DokterController@edit')->name('edit');
+	Route::patch('ubah/{id}', 'DokterController@update')->name('update');
+
+	Route::prefix('{id}/spesialis')->name('spesialis.')->group(function () {
+		Route::get('/', 'DokterSpesialisController@index')->name('index');
+		Route::get('/tambah', 'DokterSpesialisController@create')->name('create');
+		Route::post('/tambah', 'DokterSpesialisController@store')->name('store');
+		Route::delete('/{spesialis_id}/hapus', 'DokterSpesialisController@destroy')->name('destroy');
+	});
+});

@@ -83,9 +83,9 @@
 	<script src="{{ asset('assets/admin/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
 	<script src="{{ asset('assets/admin/modules/moment.min.js') }}"></script>
 	<script src="{{ asset('assets/admin/js/stisla.js') }}"></script>
+	@include('sweetalert::alert')
 	@stack('custom-js')
 	<script src="{{ asset('assets/admin/js/scripts.js') }}"></script>
-	@include('sweetalert::alert')
 </body>
 
 </html>

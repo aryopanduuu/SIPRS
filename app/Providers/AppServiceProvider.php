@@ -95,7 +95,7 @@ class AppServiceProvider extends ServiceProvider
 								'prefixChild' => 'poli'
 							],
 							[
-								'url'         => route('admin.poli.index'),
+								'url'         => route('admin.dokter.index'),
 								'title'       => 'Dokter',
 								'name'        => 'admin.dokter.index',
 								'icon'        => 'user-doctor',
