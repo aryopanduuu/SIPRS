@@ -50,115 +50,28 @@ class AppServiceProvider extends ServiceProvider
 						]
 					],
 					[
-						'url'      => route('poli'),
-						'title'    => 'Poli',
+						'url' => route('poli'),
+						'title' => 'Poli',
 						'name'     => 'poli',
 						'hasChild' => true
 					],
 					[
-						'url'      => route('spesialis'),
-						'title'    => 'Spesialis',
+						'url' =>  route('spesialis'),
+						'title' => 'Spesialis',
 						'name'     => 'spesialis',
 						'hasChild' => true
 					],
 					[
-						'url'      => '',
-						'title'    => 'Dokter',
+						'url' => '',
+						'title' => 'Dokter',
 						'name'     => 'dokter',
 						'hasChild' => true
 					],
 					[
-						'url'      => '',
-						'title'    => 'Kontak',
+						'url' => route('kontak'),
+						'title' => 'Kontak',
 						'name'     => 'kontak',
 						'hasChild' => false
-					]
-				];
-			} else {
-				$menu = [
-					[
-						'title' => 'Menu Utama',
-						'menu' => [
-							[
-								'url'      => route('admin.index'),
-								'title'    => 'Dashboard',
-								'name'     => 'admin.index',
-								'icon'     => 'tachometer',
-								'hasChild' => false
-							],
-							[
-								'url'         => route('admin.poli.index'),
-								'title'       => 'Poli',
-								'name'        => 'admin.poli.index',
-								'icon'        => 'hospital-user',
-								'hasChild'    => true,
-								'prefixChild' => 'poli'
-							],
-							[
-								'url'         => route('admin.dokter.index'),
-								'title'       => 'Dokter',
-								'name'        => 'admin.dokter.index',
-								'icon'        => 'user-doctor',
-								'hasChild'    => true,
-								'prefixChild' => 'dokter'
-							],
-							[
-								'url'         => route('admin.spesialis.index'),
-								'title'       => 'Spesialis',
-								'name'        => 'admin.spesialis.index',
-								'icon'        => 'stethoscope',
-								'hasChild'    => true,
-								'prefixChild' => 'spesialis'
-							],
-							[
-								'url'         => route('admin.poli.index'),
-								'title'       => 'Jadwal',
-								'name'        => 'admin.jadwal.index',
-								'icon'        => 'calendar-day',
-								'hasChild'    => true,
-								'prefixChild' => 'jadwal',
-								'hasSubMenu' => true,
-								'subMenu' => [
-									[
-										'title' => 'Harian',
-										'url' => ''
-									],
-									[
-										'title' => 'Hari Libur',
-										'url' => ''
-									],
-								],
-							],
-							[
-								'url'         => route('admin.poli.index'),
-								'title'       => 'Pendaftaran Online',
-								'name'        => 'admin.pendaftaran-online.index',
-								'icon'        => 'clipboard-list-check',
-								'hasChild'    => true,
-								'prefixChild' => 'pendaftaran-online',
-							]
-						]
-					],
-					[
-						'title' => 'Informasi Website',
-						'menu' => [
-							[
-								'url'      => route('admin.index'),
-								'title'    => 'Deskripsi/SEO',
-								'name'     => 'admin.seo.index',
-								'icon'     => 'text',
-								'hasChild' => true,
-								'prefixChild' => 'seo',
-							],
-							[
-								'url'      => route('admin.index'),
-								'title'    => 'Kontak',
-								'name'     => 'admin.kontak.index',
-								'icon'     => 'contact-book',
-								'hasChild' => true,
-								'prefixChild' => 'kontak',
-							],
-						]
 					]
 				];
 			}
