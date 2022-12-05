@@ -42,3 +42,7 @@ Route::prefix('jadwal/harian')->name('jadwal-harian.')->group(function () {
 	Route::patch('ubah/{id}', 'JadwalHarianController@update')->name('update');
 	Route::get('{id}/jam-kerja', 'JadwalHarianController@show')->name('show');
 });
+
+Route::prefix('kontak')->name('kontak.')->group(function () {
+	Route::get('/', 'KontakController@index')->name('index');
+});

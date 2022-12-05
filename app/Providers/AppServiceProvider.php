@@ -153,7 +153,7 @@ class AppServiceProvider extends ServiceProvider
 								'prefixChild' => 'seo',
 							],
 							[
-								'url'      => route('admin.index'),
+								'url'      => route('admin.kontak.index'),
 								'title'    => 'Kontak',
 								'name'     => 'admin.kontak.index',
 								'icon'     => 'contact-book',
