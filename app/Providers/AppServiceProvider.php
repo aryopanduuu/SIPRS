@@ -113,7 +113,7 @@ class AppServiceProvider extends ServiceProvider
 							[
 								'url'         => route('admin.poli.index'),
 								'title'       => 'Jadwal',
-								'name'        => 'admin.jadwal.index',
+								'name'        => null,
 								'icon'        => 'calendar-day',
 								'hasChild'    => true,
 								'prefixChild' => 'jadwal',
@@ -121,11 +121,13 @@ class AppServiceProvider extends ServiceProvider
 								'subMenu' => [
 									[
 										'title' => 'Harian',
-										'url' => ''
+										'url' => route('admin.jadwal-harian.index'),
+										'prefix' => ['jadwal', 'harian'],
 									],
 									[
 										'title' => 'Hari Libur',
-										'url' => ''
+										'url' => '',
+										'prefix' => ['jadwal', 'libur'],
 									],
 								],
 							],

@@ -26,11 +26,10 @@ class DokterDataTable extends DataTable
 	{
 		return (new EloquentDataTable($query))
 			->editColumn('foto', function ($query) {
-				if ($query->dokter->foto) {
-					return '<img src="/assets/img/' . $query->dokter->foto . '" alt="avatar" width="30" class="rounded-circle">';
-				} else {
-					return '-';
-				}
+				return '<img src="/storage/foto-dokter/' . $query->foto . '" alt="avatar" width="50" class="img-fluid">';
+			})
+			->editColumn('nama_poli', function ($query) {
+				return $query->nama_poli ?? '-';
 			})
 			->addColumn('action', function ($query) {
 				$opsi = '<a class="btn btn-icon btn-primary mr-1" data-toggle="tooltip" title="Ubah" href="' . route('admin.dokter.edit', $query->id) . '">
@@ -41,6 +40,9 @@ class DokterDataTable extends DataTable
 					</a>';
 
 				return $opsi;
+			})
+			->filterColumn('nama', function ($query, $keyword) {
+				$query->whereRaw("nama like ?", ["%{$keyword}%"]);
 			})
 			->filterColumn('nip', function ($query, $keyword) {
 				$query->whereRaw("nip like ?", ["%{$keyword}%"]);
@@ -58,12 +60,12 @@ class DokterDataTable extends DataTable
 	 * @param \App\Models\Dokter $model
 	 * @return \Illuminate\Database\Eloquent\Builder
 	 */
-	public function query(User $model): QueryBuilder
+	public function query(UserDokter $model): QueryBuilder
 	{
 		return $model
-			->join('user_dokters', 'user_dokters.user_id', '=', 'users.id')
-			->join('user_dokter_polis', 'user_dokter_polis.user_id', '=', 'users.id')
-			->join('polis', 'user_dokter_polis.poli_id', '=', 'polis.id')
+			->leftJoin('users', 'user_dokters.user_id', '=', 'users.id')
+			->leftJoin('user_dokter_polis', 'user_dokter_polis.user_id', '=', 'users.id')
+			->leftJoin('polis', 'user_dokter_polis.poli_id', '=', 'polis.id')
 			->select('users.id', 'users.nama', 'user_dokters.nip', 'user_dokters.foto', 'polis.nama_poli')
 			->newQuery();
 	}
@@ -96,7 +98,8 @@ class DokterDataTable extends DataTable
 				->exportable(false)
 				->addClass('text-center')
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
-			Column::make('foto')
+			Column::computed('foto')
+				->addClass('text-center')
 				->searchable(false)
 				->orderable(false),
 			Column::make('nip')->title('NIP'),

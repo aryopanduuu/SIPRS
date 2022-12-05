@@ -16,8 +16,8 @@ return new class extends Migration
 		Schema::create('poli_jadwals', function (Blueprint $table) {
 			$table->uuid('poli_id');
 			$table->enum('hari', ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu']);
-			$table->time('jam_kerja_buka');
-			$table->time('jam_kerja_tutup');
+			$table->time('jam_kerja_buka')->nullable();
+			$table->time('jam_kerja_tutup')->nullable();
 			$table->timestamps();
 			$table->foreign('poli_id')->references('id')->on('polis');
 		});
