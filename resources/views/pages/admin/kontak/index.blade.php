@@ -34,7 +34,7 @@
 									<td>{{ $item->keterangan }}</td>
 									<td>{{ $item->konten }}</td>
 									<td class="text-center">
-										<a class="btn btn-primary" href="">
+										<a class="btn btn-primary" href="{{ route('admin.kontak.edit', $item->id) }}">
 											<i class="fas fa-pencil-alt"></i>
 										</a>
 									</td>

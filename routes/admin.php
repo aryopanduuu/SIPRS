@@ -45,4 +45,6 @@ Route::prefix('jadwal/harian')->name('jadwal-harian.')->group(function () {
 
 Route::prefix('kontak')->name('kontak.')->group(function () {
 	Route::get('/', 'KontakController@index')->name('index');
+	Route::get('ubah/{id}', 'KontakController@edit')->name('edit');
+	Route::patch('ubah/{id}', 'KontakController@update')->name('update');
 });

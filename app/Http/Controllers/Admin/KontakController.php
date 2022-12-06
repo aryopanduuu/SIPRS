@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FormKontakRequest;
 use App\Models\Kontak;
 use Illuminate\Http\Request;
 
@@ -59,7 +60,23 @@ class KontakController extends Controller
 	 */
 	public function edit($id)
 	{
-		//
+		$data = Kontak::where('tipe', 'kontak')
+			->where('id', $id)
+			->firstOrFail();
+
+		if ($data->slug == 'map') {
+			$lt = explode(',', $data->konten);
+			$data->longitude = $lt[0];
+			$data->latitude = $lt[1];
+		}
+
+		$page = [
+			'title' => 'Ubah',
+			'currentRoute' => route('admin.kontak.edit', $id),
+			'formMethod' => 'PATCH',
+			'formRoute' => route('admin.kontak.update', $id)
+		];
+		return view('pages.admin.kontak.edit', compact('data', 'page'));
 	}
 
 	/**
@@ -69,9 +86,26 @@ class KontakController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $id)
+	public function update(FormKontakRequest $request, $id)
 	{
-		//
+		$data = Kontak::where('tipe', 'kontak')
+			->where('id', $id)
+			->firstOrFail();
+
+		$validated = $request->validated();
+		if ($request->has('email')) {
+			$param = $validated['email'];
+		} else if ($request->has('alamat')) {
+			$param = $validated['alamat'];
+		} else if ($request->has('nomor_telepon')) {
+			$param = $validated['nomor_telepon'];
+		} else if ($request->has(['longitude', 'latitude'])) {
+			$param = $validated['longitude'] . ',' . $validated['latitude'];
+		}
+		$data->update(['konten' => $param]);
+
+		alert('Sukses', 'Data berhasil diubah', 'success');
+		return redirect()->back();
 	}
 
 	/**

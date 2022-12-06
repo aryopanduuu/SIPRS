@@ -9,4 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class Kontak extends Model
 {
 	use HasFactory, HasUuids;
+
+	protected $fillable = ['konten'];
 }

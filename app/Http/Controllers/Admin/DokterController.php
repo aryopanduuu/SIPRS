@@ -97,7 +97,6 @@ class DokterController extends Controller
 			->join('user_dokters', 'user_dokters.user_id', '=', 'users.id')
 			->select('users.id', 'users.nik', 'users.nama', 'users.jk', 'users.tgl_lahir', 'users.alamat', 'users.email', 'users.no_hp', 'user_dokters.nip', 'user_dokters.foto')
 			->firstOrFail();
-		// return $data;
 
 		$page = [
 			'title' => 'Ubah',
