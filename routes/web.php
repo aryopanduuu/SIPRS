@@ -30,3 +30,5 @@ Route::get('/spesialis', 'SpesialisController@index')->name('spesialis');
 Route::get('/kontak', function() {
     return view('pages.kontak');
 })->name('kontak');
+
+Route::get('/dokter', 'DokterController@index')->name('dokter');

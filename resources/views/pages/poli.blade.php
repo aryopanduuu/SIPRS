@@ -26,7 +26,6 @@
                                         aria-controls="collapseExample">
                                         Jadwal
                                     </button>
-                                    </p>
                                     {{-- <div class="card card-body">
                                         <div class="collapse" id="collapseExample">
                                         </div>
@@ -100,7 +99,7 @@
 
 
 
-            {{-- 
+            {{--
             <div class="row">
                 @foreach ($polis as $poli)
                     <div class="col-md-4">
