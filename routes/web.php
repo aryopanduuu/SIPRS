@@ -21,10 +21,11 @@ Route::prefix('pendaftaran-online')->name('appointment.')->group(function () {
 		Route::get('/', 'AppointmentController@pasienLama')->name('index');
 		Route::post('/', 'AppointmentController@checkNomorRekamMedis')->name('search');
 	});
+
+	Route::get('/cetak-ulang', 'CetakUlangController@index')->name('cetak-ulang');
+	Route::post('/cetak-ulang', 'CetakUlangController@show');
 });
 
 Route::get('/poli', 'PoliController@index')->name('poli');
-
 Route::get('/spesialis', 'SpesialisController@index')->name('spesialis');
-
 Route::get('/kontak', 'KontakController@index')->name('kontak');

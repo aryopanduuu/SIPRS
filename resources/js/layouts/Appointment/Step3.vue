@@ -29,8 +29,8 @@
 						<tbody>
 							<tr class="text-center" v-for="(dokter, i) in listDokter.data" :key="i">
 								<td class="p-2">
-									<img :src="'/assets/img/' + dokter.foto" alt="" class="img-fluid rounded-circle"
-										width="85">
+									<img :src="'/storage/foto-dokter/' + dokter.foto" alt="" class="rounded-circle"
+										width="85" height="85" style="object-fit: cover;">
 								</td>
 								<td class="p-2 vertical-align-middle">
 									{{ dokter.nama }}<br />
