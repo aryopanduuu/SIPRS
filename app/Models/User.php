@@ -43,7 +43,7 @@ class User extends Model
 	 */
 	public function dokter(): HasOne
 	{
-		return $this->hasOne(UserDokter::class);
+		return $this->hasOne(UserDokter::class, 'user_id', 'id');
 	}
 
 	/**

@@ -24,8 +24,12 @@
 						</a>
 						<ul class="dropdown-menu">
 							@foreach ($item['subMenu'] as $subItem)
-								<li>
-									<a class="nav-link" href="{{ $subItem['url'] }}">{{ $subItem['title'] }}</a>
+								@if (Request::segment(2) == $subItem['prefix'][0] && Request::segment(3) == $subItem['prefix'][1])
+									<li class="active">
+									@else
+									<li>
+								@endif
+								<a class="nav-link" href="{{ $subItem['url'] }}">{{ $subItem['title'] }}</a>
 								</li>
 							@endforeach
 						</ul>

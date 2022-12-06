@@ -11,6 +11,7 @@
 	@stack('custom-css')
 	<link href="{{ asset('assets/admin/css/style.css') }}" rel="stylesheet">
 	<link href="{{ asset('assets/admin/css/components.css') }}" rel="stylesheet">
+	<link href="{{ asset('assets/admin/css/custom.css') }}" rel="stylesheet">
 </head>
 
 <body>

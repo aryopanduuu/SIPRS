@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kontak;
+use App\Http\Requests\CetakUlangRequest;
+use App\Models\UserBooking;
 use Illuminate\Http\Request;
 
-class KontakController extends Controller
+class CetakUlangController extends Controller
 {
 	/**
 	 * Display a listing of the resource.
@@ -14,16 +15,7 @@ class KontakController extends Controller
 	 */
 	public function index()
 	{
-		$data = [];
-		$kontak = Kontak::where('tipe', 'kontak')
-			->whereIn('slug', ['email', 'nomor_telepon', 'map', 'alamat', 'fax'])
-			->get(['konten', 'slug']);
-
-		foreach ($kontak as $index => $item) {
-			$data[$item->slug] = $item->konten;
-		};
-		$data = (object) $data;
-		return view('pages.kontak', compact('data'));
+		return view('pages.cetak-ulang');
 	}
 
 	/**
@@ -50,21 +42,29 @@ class KontakController extends Controller
 	/**
 	 * Display the specified resource.
 	 *
-	 * @param  \App\Models\Kontak  $kontak
+	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(Kontak $kontak)
+	public function show(CetakUlangRequest $request)
 	{
-		//
+		$validated = $request->validated();
+		$data = UserBooking::where('kode_antrian', $validated['kode_antrian'])
+			->where('tgl_periksa', $validated['tgl_periksa'])
+			->first();
+
+		if (!$data) {
+			return redirect()->back()->withErrors(['kode_antrian' => 'Kode antrian tidak ditemukan'])->withInput();
+		}
+		return redirect(route('appointment.show', $data->kode_antrian));
 	}
 
 	/**
 	 * Show the form for editing the specified resource.
 	 *
-	 * @param  \App\Models\Kontak  $kontak
+	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function edit(Kontak $kontak)
+	public function edit($id)
 	{
 		//
 	}
@@ -73,10 +73,10 @@ class KontakController extends Controller
 	 * Update the specified resource in storage.
 	 *
 	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \App\Models\Kontak  $kontak
+	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, Kontak $kontak)
+	public function update(Request $request, $id)
 	{
 		//
 	}
@@ -84,10 +84,10 @@ class KontakController extends Controller
 	/**
 	 * Remove the specified resource from storage.
 	 *
-	 * @param  \App\Models\Kontak  $kontak
+	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Kontak $kontak)
+	public function destroy($id)
 	{
 		//
 	}

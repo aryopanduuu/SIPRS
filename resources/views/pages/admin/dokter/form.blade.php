@@ -24,11 +24,20 @@
 					<h4>{{ $page['title'] }} Dokter</h4>
 				</div>
 				<div class="card-body">
-					{!! Form::open(['method' => $page['formMethod'], 'url' => $page['formRoute']]) !!}
+					{!! Form::open([
+					    'method' => $page['formMethod'],
+					    'url' => $page['formRoute'],
+					    'enctype' => 'multipart/form-data',
+					]) !!}
 					<div class="form-group row mb-4">
-						{!! Form::label('nip', 'NIP', [
-						    'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
-						]) !!}
+						{!! Form::label(
+						    'nip',
+						    'NIP<span class="text-danger">*</span>',
+						    [
+						        'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
+						    ],
+						    false,
+						) !!}
 						<div class="col-sm-12 col-md-7">
 							{!! Form::text('nip', old('nip') ?? ($data->nip ?? null), [
 							    'class' => 'form-control' . $errors->first('nip', ' is-invalid'),
@@ -42,9 +51,14 @@
 						</div>
 					</div>
 					<div class="form-group row mb-4">
-						{!! Form::label('nik', 'NIK', [
-						    'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
-						]) !!}
+						{!! Form::label(
+						    'nik',
+						    'NIK<span class="text-danger">*</span>',
+						    [
+						        'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
+						    ],
+						    false,
+						) !!}
 						<div class="col-sm-12 col-md-7">
 							{!! Form::text('nik', old('nik') ?? ($data->nik ?? null), [
 							    'class' => 'form-control' . $errors->first('nik', ' is-invalid'),
@@ -60,9 +74,14 @@
 						</div>
 					</div>
 					<div class="form-group row mb-4">
-						{!! Form::label('nama', 'Nama Dokter', [
-						    'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
-						]) !!}
+						{!! Form::label(
+						    'nama',
+						    'Nama Dokter<span class="text-danger">*</span>',
+						    [
+						        'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
+						    ],
+						    false,
+						) !!}
 						<div class="col-sm-12 col-md-7">
 							{!! Form::text('nama', old('nama') ?? ($data->nama ?? null), [
 							    'class' => 'form-control' . $errors->first('nama', ' is-invalid'),
@@ -76,9 +95,14 @@
 						</div>
 					</div>
 					<div class="form-group row mb-4">
-						{!! Form::label('jenis_kelamin', 'Jenis Kelamin', [
-						    'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
-						]) !!}
+						{!! Form::label(
+						    'jenis_kelamin',
+						    'Jenis Kelamin<span class="text-danger">*</span>',
+						    [
+						        'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
+						    ],
+						    false,
+						) !!}
 						<div class="col-sm-12 col-md-7">
 							{!! Form::select(
 							    'jenis_kelamin',
@@ -98,9 +122,14 @@
 						</div>
 					</div>
 					<div class="form-group row mb-4">
-						{!! Form::label('tanggal_lahir', 'Tanggal Lahir', [
-						    'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
-						]) !!}
+						{!! Form::label(
+						    'tanggal_lahir',
+						    'Tanggal Lahir<span class="text-danger">*</span>',
+						    [
+						        'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
+						    ],
+						    false,
+						) !!}
 						<div class="col-sm-12 col-md-7">
 							{!! Form::date('tanggal_lahir', old('tanggal_lahir') ?? ($data->tgl_lahir ?? null), [
 							    'class' => 'form-control' . $errors->first('tanggal_lahir', ' is-invalid'),
@@ -114,9 +143,14 @@
 						</div>
 					</div>
 					<div class="form-group row mb-4">
-						{!! Form::label('alamat', 'Alamat', [
-						    'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
-						]) !!}
+						{!! Form::label(
+						    'alamat',
+						    'Alamat<span class="text-danger">*</span>',
+						    [
+						        'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
+						    ],
+						    false,
+						) !!}
 						<div class="col-sm-12 col-md-7">
 							{!! Form::textarea('alamat', old('alamat') ?? ($data->alamat ?? null), [
 							    'class' => 'form-control' . $errors->first('alamat', ' is-invalid'),
@@ -146,9 +180,14 @@
 						</div>
 					</div>
 					<div class="form-group row mb-4">
-						{!! Form::label('no_hp', 'No HP', [
-						    'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
-						]) !!}
+						{!! Form::label(
+						    'no_hp',
+						    'No HP<span class="text-danger">*</span>',
+						    [
+						        'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
+						    ],
+						    false,
+						) !!}
 						<div class="col-sm-12 col-md-7">
 							{!! Form::text('no_hp', old('no_hp') ?? ($data->no_hp ?? null), [
 							    'class' => 'form-control' . $errors->first('no_hp', ' is-invalid'),
@@ -163,6 +202,30 @@
 						</div>
 					</div>
 					<div class="form-group row mb-4">
+						{!! Form::label('foto', 'Foto', ['class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3']) !!}
+						<div class="col-sm-12 col-md-7">
+							<div class="custom-file">
+								{!! Form::file('foto', [
+								    'class' => 'custom-file-input' . $errors->first('foto', ' is-invalid'),
+								    'accept' => '.jpeg,.jpg,.png',
+								]) !!}
+								<label class="custom-file-label" for="foto">Choose file</label>
+								@error('foto')
+									<div class="invalid-feedback pt-1">
+										{{ $message }}
+									</div>
+								@enderror
+							</div>
+							@isset($data->foto)
+								<img class="img-thumbnail mt-3" id="preview-foto"
+									data-img-default="{{ asset('storage/foto-dokter/' . $data->foto ?? null) }}"
+									src="{{ asset('storage/foto-dokter/' . $data->foto ?? null) }}" alt="Foto Dokter" width="150">
+							@else
+								<img class="img-thumbnail mt-3" id="preview-foto" alt="Foto Dokter" style="display: none;" width="150">
+							@endisset
+						</div>
+					</div>
+					<div class="form-group row mb-4">
 						<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
 						<div class="col-sm-12 col-md-7">
 							{!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
@@ -170,19 +233,41 @@
 					</div>
 					{!! Form::close() !!}
 				</div>
+				<div class="card-footer">
+					(<span class="text-danger">*</span>) = Wajib diisi atau dipilih.
+				</div>
 			</div>
 		</div>
 	</div>
 @endsection
 
 @push('custom-js')
+	<script src="{{ asset('assets/admin/js/bs-custom-file-input.js') }}"></script>
 	<script src="{{ asset('assets/js/cleave.min.js') }}"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/addons/cleave-phone.id.js"></script>
+	<script src="{{ asset('assets/js/cleave-phone.id.js') }}"></script>
 	<script>
+		bsCustomFileInput.init()
 		new Cleave('#no_hp', {
 			phone: true,
 			phoneRegionCode: 'ID',
 			delimiter: ''
 		});
+		$('#foto').on('change', function() {
+			const [file] = this.files
+			if (file) {
+				$('#preview-foto').attr('src', URL.createObjectURL(file)).removeClass('d-none').slideDown()
+			} else {
+				const defaultImg = $('#preview-foto').data('img-default');
+				if (defaultImg) {
+					$('#preview-foto').attr('src', defaultImg)
+				} else {
+					$('#preview-foto').slideUp({
+						complete: function() {
+							$('#preview-foto').attr('src', null)
+						}
+					})
+				}
+			}
+		})
 	</script>
 @endpush

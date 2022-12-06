@@ -8,6 +8,8 @@ use App\Http\Requests\FormDokterRequest;
 use App\Models\User;
 use App\Models\UserDokter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DokterController extends Controller
 {
@@ -56,12 +58,20 @@ class DokterController extends Controller
 			'email' => $validated['email'],
 			'no_hp' => $validated['no_hp'],
 		]);
-		$user->dokter()->create([
+
+		if ($request->hasFile('foto')) {
+			$param = ['foto' => Str::slug($validated['nip']) . '-' . time() . '.' . $request->file('foto')->getClientOriginalExtension()];
+			Storage::putFileAs('public/foto-dokter', $request->file('foto'), $param['foto']);
+		} else {
+			$param = ['foto' => 'avatar.png'];
+		}
+
+		$user->dokter()->create($param + [
 			'nip' => $validated['nip']
 		]);
 
-		alert('Sukses', 'Data berhasil ditambahkan', 'success');
-		return redirect()->back();
+		// alert('Sukses', 'Data berhasil ditambahkan', 'success');
+		// return redirect()->back();
 	}
 
 	/**
@@ -83,8 +93,10 @@ class DokterController extends Controller
 	 */
 	public function edit($id)
 	{
-		$data = User::where('id', $id)->has('dokter')->firstOrFail();
-		$data->nip = $data->dokter->nip;
+		$data = User::where('id', $id)
+			->join('user_dokters', 'user_dokters.user_id', '=', 'users.id')
+			->select('users.id', 'users.nik', 'users.nama', 'users.jk', 'users.tgl_lahir', 'users.alamat', 'users.email', 'users.no_hp', 'user_dokters.nip', 'user_dokters.foto')
+			->firstOrFail();
 
 		$page = [
 			'title' => 'Ubah',
@@ -116,7 +128,21 @@ class DokterController extends Controller
 			'email' => $validated['email'],
 			'no_hp' => $validated['no_hp'],
 		]);
-		$data->dokter->update([
+
+		if ($request->hasFile('foto')) {
+			$param = ['foto' => Str::slug($data->dokter->nip) . '-' . time() . '.' . $request->file('foto')->getClientOriginalExtension()];
+		} else {
+			$param = ['foto' => $data->dokter->foto];
+		}
+
+		if ($request->hasFile('foto')) {
+			Storage::putFileAs('public/foto-dokter', $request->file('foto'), $param['foto']);
+			if ($data->dokter->foto) {
+				Storage::disk('foto-dokter')->delete($data->dokter->foto);
+			}
+		}
+
+		$data->dokter->update($param + [
 			'nip' => $validated['nip']
 		]);
 

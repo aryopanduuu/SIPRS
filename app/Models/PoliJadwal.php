@@ -12,6 +12,15 @@ class PoliJadwal extends Model
 {
 	use HasFactory;
 
+	// protected $primaryKey = 'poli_id';
+
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = ['jam_kerja_buka', 'jam_kerja_tutup', 'hari'];
+
 	/**
 	 * Get the poli that owns the PoliJadwal
 	 *
@@ -25,14 +34,21 @@ class PoliJadwal extends Model
 	public function jamKerjaBuka(): Attribute
 	{
 		return new Attribute(
-			get: fn ($value) => $this->timeWithoutSec($value)
+			get: fn ($value) => $value ? $this->timeWithoutSec($value) : null
 		);
 	}
 
 	public function jamKerjaTutup(): Attribute
 	{
 		return new Attribute(
-			get: fn ($value) => $this->timeWithoutSec($value)
+			get: fn ($value) => $value ? $this->timeWithoutSec($value) : null
+		);
+	}
+
+	public function jamKerja(): Attribute
+	{
+		return new Attribute(
+			get: fn ($value, $attributes) => $attributes['jam_kerja_buka'] && $attributes['jam_kerja_tutup'] ? $this->timeWithoutSec($attributes['jam_kerja_buka']) . ' - ' . $this->timeWithoutSec($attributes['jam_kerja_tutup']) : null,
 		);
 	}
 

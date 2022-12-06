@@ -35,3 +35,16 @@ Route::prefix('dokter')->name('dokter.')->group(function () {
 		Route::delete('/{spesialis_id}/hapus', 'DokterSpesialisController@destroy')->name('destroy');
 	});
 });
+
+Route::prefix('jadwal/harian')->name('jadwal-harian.')->group(function () {
+	Route::get('/', 'JadwalHarianController@index')->name('index');
+	Route::get('ubah/{id}', 'JadwalHarianController@edit')->name('edit');
+	Route::patch('ubah/{id}', 'JadwalHarianController@update')->name('update');
+	Route::get('{id}/jam-kerja', 'JadwalHarianController@show')->name('show');
+});
+
+Route::prefix('kontak')->name('kontak.')->group(function () {
+	Route::get('/', 'KontakController@index')->name('index');
+	Route::get('ubah/{id}', 'KontakController@edit')->name('edit');
+	Route::patch('ubah/{id}', 'KontakController@update')->name('update');
+});

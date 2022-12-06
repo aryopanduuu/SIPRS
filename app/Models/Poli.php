@@ -18,8 +18,6 @@ class Poli extends Model
 	 */
 	protected $fillable = ['nama_poli'];
 
-
-
 	/**
 	 * Get all of the jadwal for the Poli
 	 *
