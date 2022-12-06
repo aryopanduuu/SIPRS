@@ -26,7 +26,7 @@ class DokterDataTable extends DataTable
 	{
 		return (new EloquentDataTable($query))
 			->editColumn('foto', function ($query) {
-				return '<img src="/storage/foto-dokter/' . $query->foto . '" alt="avatar" width="50" class="img-fluid">';
+				return '<img src="/storage/foto-dokter/' . $query->foto . '" alt="avatar" width="50" height="50" style="object-fit: cover;" class="rounded-circle">';
 			})
 			->editColumn('nama_poli', function ($query) {
 				return $query->nama_poli ?? '-';
