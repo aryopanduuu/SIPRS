@@ -29,13 +29,13 @@
 					<p>{{ errMessage.tgl_lahir[0] }}</p>
 				</div>
 			</div>
-			<!-- <div class="form-group">
-                <vue-recaptcha ref="recaptcha" @verify="setRecaptcha" @error="setRecaptchaError"
-                    :sitekey="recaptchaSiteKey" />
-                <div class="invalid-feedback d-block" v-if="errMessage.recaptcha">
-                    <p>{{ errMessage.recaptcha[0] }}</p>
-                </div>
-            </div> -->
+			<div class="form-group">
+				<vue-recaptcha ref="recaptcha" @verify="setRecaptcha" @error="setRecaptchaError"
+					:sitekey="recaptchaSiteKey" />
+				<div class="invalid-feedback d-block" v-if="errMessage.recaptcha">
+					<p>{{ errMessage.recaptcha[0] }}</p>
+				</div>
+			</div>
 			<div class=" form-group text-center m-b-0">
 				<button class="account-btn btn btn-primary" @click="searchNomorRekamMedis">
 					<i class="fa fa-search"></i> Cari
@@ -50,9 +50,9 @@ import {
 	VueRecaptcha
 } from 'vue-recaptcha';
 export default {
-	// components: {
-	// VueRecaptcha
-	// },
+	components: {
+		VueRecaptcha
+	},
 	data() {
 		return {
 			errMessage: {},
@@ -96,8 +96,8 @@ export default {
 				url: '/api/appointment/checkNomorRekamMedis',
 				data: {
 					nomor_rekam_medis: this.$refs.nomor_rekam_medis.value,
-					tgl_lahir: this.$refs.tgl_lahir.value
-					// recaptcha: $$this.recaptchaToken
+					tgl_lahir: this.$refs.tgl_lahir.value,
+					recaptcha: this.recaptchaToken
 				},
 				headers: {
 					'X-Dry-Run': true,

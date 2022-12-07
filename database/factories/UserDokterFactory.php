@@ -26,7 +26,7 @@ class UserDokterFactory extends Factory
 		$nip = fake()->unique()->numerify('##################');
 		return [
 			'nip' => $nip,
-			'foto' => 'doctor-0' . rand(1, 9) . '.jpg',
+			'foto' => 'avatar.png',
 			'user_id' => User::factory()
 				->has(UserDokterPoli::factory()->count(1)
 					->state(

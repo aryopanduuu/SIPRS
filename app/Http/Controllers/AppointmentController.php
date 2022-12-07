@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AppointmentRequest;
-use App\Models\User;
 use App\Models\UserBooking;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Milon\Barcode\Facades\DNS2DFacade;
 use Intervention\Image\ImageManagerStatic as Image;
-use Twilio\Rest\Client;
 
 class AppointmentController extends Controller
 {

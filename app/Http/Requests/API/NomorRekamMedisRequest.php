@@ -16,7 +16,8 @@ class NomorRekamMedisRequest extends FormRequest
 	{
 		return [
 			'nomor_rekam_medis' => ['required'],
-			'tgl_lahir' => ['required', 'date']
+			'tgl_lahir' => ['required', 'date'],
+			'recaptcha' => 'recaptcha'
 		];
 	}
 
