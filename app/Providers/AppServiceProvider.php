@@ -62,7 +62,7 @@ class AppServiceProvider extends ServiceProvider
 						'hasChild' => true
 					],
 					[
-						'url' => '',
+						'url' => route('dokter'),
 						'title' => 'Dokter',
 						'name'     => 'dokter',
 						'hasChild' => true
