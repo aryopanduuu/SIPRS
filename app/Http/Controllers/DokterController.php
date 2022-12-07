@@ -14,7 +14,7 @@ class DokterController extends Controller
      */
     public function index()
     {
-        $dokters = User::get();
+        $dokters = User::has('dokter')->get();
         return view('pages.dokter', compact('dokters'));
     }
 
