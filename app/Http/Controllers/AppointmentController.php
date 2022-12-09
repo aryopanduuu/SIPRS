@@ -51,6 +51,13 @@ class AppointmentController extends Controller
 	public function store(Request $request)
 	{
 		$notif = new Notification();
+		$data = UserBooking::where('id', $notif->order_id)->first();
+		$fraud = $notif->fraud_status;
+
+		if ($data && $fraud == 'accept') {
+			$data->payment_status = 1;
+			$data->save();
+		}
 	}
 
 	/**
@@ -63,14 +70,14 @@ class AppointmentController extends Controller
 	{
 		$data = UserBooking::where('kode_antrian', $kode)->firstOrFail();
 
-		if (!$data->payment_status) {
-			$status = new GetTransactionStatus($data->kode_antrian);
-			$status = (object) $status->getStatus();
+		// if (!$data->payment_status) {
+		// 	$status = new GetTransactionStatus($data->kode_antrian);
+		// 	$status = (object) $status->getStatus();
 
-			if (isset($status->fraud_status) && $status->fraud_status == 'accept') {
-				$data->update(['payment_status' => 1]);
-			}
-		}
+		// 	if (isset($status->fraud_status) && $status->fraud_status == 'accept') {
+		// 		$data->update(['payment_status' => 1]);
+		// 	}
+		// }
 		return view('pages.pendaftaran-online.show', compact('data'));
 	}
 
