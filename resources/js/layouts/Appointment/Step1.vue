@@ -9,8 +9,8 @@
 				</label>
 				<div class="input-group">
 					<input name="nomor_rekam_medis" ref="nomor_rekam_medis" class="form-control"
-						:class="{ 'is-invalid': errMessage.nomor_rekam_medis }" placeholder="001-86-5645"
-						value="001-86-5645" @keyup.enter="searchNomorRekamMedis" @input="toggleClearBtn" />
+						:class="{ 'is-invalid': errMessage.nomor_rekam_medis }" placeholder="000-00-0000"
+						@keyup.enter="searchNomorRekamMedis" @input="toggleClearBtn" />
 					<button type="button" class="btn bg-transparent btn-clear" v-if="showClearBtn" @click="clearInput">
 						<i class="fa fa-times"></i>
 					</button>
@@ -23,7 +23,7 @@
 				<label for="tgl_lahir">
 					Tanggal Lahir<span class="text-red">*</span>
 				</label>
-				<input type="date" name="tgl_lahir" ref="tgl_lahir" class="form-control" value="1967-04-19"
+				<input type="date" name="tgl_lahir" ref="tgl_lahir" class="form-control"
 					:class="{ 'is-invalid': errMessage.tgl_lahir }" @keyup.enter="searchNomorRekamMedis" />
 				<div class="invalid-feedback d-block" v-if="errMessage.tgl_lahir">
 					<p>{{ errMessage.tgl_lahir[0] }}</p>

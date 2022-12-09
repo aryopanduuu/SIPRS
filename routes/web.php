@@ -17,6 +17,7 @@ Route::prefix('pendaftaran-online')->name('appointment.')->group(function () {
 	Route::post('ticket/pdf/{id}', 'AppointmentController@pdf')->name('pdf');
 	Route::get('ticket/qrcode/{id}', 'AppointmentController@qrcode')->name('qrcode');
 	Route::get('ticket/whatsapp/{id}', 'AppointmentController@whatsapp')->name('whatsapp');
+	Route::post('/ticket/konfirmasiPembayaran', 'CetakUlangController@store');
 	Route::prefix('pasien-lama')->name('pasien-lama.')->group(function () {
 		Route::get('/', 'AppointmentController@pasienLama')->name('index');
 		Route::post('/', 'AppointmentController@checkNomorRekamMedis')->name('search');

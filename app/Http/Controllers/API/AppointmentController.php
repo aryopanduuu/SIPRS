@@ -9,6 +9,7 @@ use App\Http\Requests\TglPemeriksaanRequest;
 use App\Mail\TiketAntrian;
 use App\Models\User;
 use App\Models\UserBooking;
+use App\Services\Midtrans\CreateSnapTokenService;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -77,18 +78,36 @@ class AppointmentController extends Controller
 			$nomor_antrian = UserBooking::bookingLatestAntrianByDay($request->poli, $request->dokter, $request->tgl_periksa);
 			$perkiraan_jam = UserBooking::getPerkiraanJam($request->poli, $request->dokter, $request->tgl_periksa);
 
-
 			$create = UserBooking::create([
 				'nomor_antrian' => $nomor_antrian,
 				'user_id' => $request->user,
 				'dokter_id' => $request->dokter,
 				'poli_id' => $request->poli,
 				'tgl_periksa' => $request->tgl_periksa,
-				'perkiraan_jam' => $perkiraan_jam
+				'perkiraan_jam' => $perkiraan_jam,
 			]);
+
+			$param = [
+				'kode_antrian' => $create->kode_antrian,
+				'price' => 10000,
+				'customer' => [
+					'first_name' => $user->nama,
+					'phone' => $user->no_hp,
+				]
+			];
+			if ($user->email) {
+				$param['customer']['email'] = $user->email;
+			}
+			$param = (object) $param;
+			$midtrans = new CreateSnapTokenService($param);
+			$snapToken = $midtrans->getSnapToken();
+
+			$create->snap_token = $snapToken;
+			$create->save();
+
 			$response = [
 				'data' => $create,
-				'url' => route('appointment.show', $create->id),
+				'url' => route('appointment.show', $create->kode_antrian),
 				'status' => 200
 			];
 			return response()->json($response, 200);

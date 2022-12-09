@@ -34,11 +34,10 @@ class DokterController extends Controller
 			});
 
 			$latest = UserBooking::where('poli_id', $request->poli)
-				->where('dokter_id', $e->dokter->user_id)
+				->where('dokter_id', $e->id)
 				->whereDate('tgl_periksa', $request->tgl_periksa)
 				->latest()->first('perkiraan_jam');
 
-			// $perkiraan_jam = '';
 			if ($latest) {
 				$perkiraan_jam = date('h:i', strtotime('+30 minutes', strtotime($latest->perkiraan_jam)));
 			} else {

@@ -7,7 +7,7 @@
 			<div class="account-box">
 				{!! Form::open(['route' => 'appointment.cetak-ulang']) !!}
 				<div class="form-group">
-					{!! Form::label('kode_antrian', 'Kode Antrian<span class="text-red">*</span>', [], false) !!}
+					{!! Form::label('kode_antrian', 'Kode Antrian/Nomor Rekam Medis<span class="text-red">*</span>', [], false) !!}
 					{!! Form::text('kode_antrian', null, [
 					    'class' => 'form-control' . $errors->first('kode_antrian', ' is-invalid'),
 					    'required',

@@ -9,30 +9,36 @@
 						<a href="{{ route('appointment.index') }}">
 							<span class="font-weight-bold"><i class="fa fa-arrow-left"></i> Kembali</span>
 						</a>
-						<div class="btn-group" role="group">
-							<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
-								<i class="fa-duotone fa-share-all"></i>
-							</button>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="{{ route('appointment.qrcode', $data->kode_antrian) }}" {{-- href="data:image/png;base64,{{ DNS2D::getBarcodePNG(route('appointment.show', $data->kode_antrian), 'QRCODE') }}"
-                                --}}
-									download="Tiket Antrian-{{ $data->kode_antrian }}.png">
-									<i class="fa-duotone fa-file-download"></i> Unduh QR Code
-								</a>
-								<button class="dropdown-item" onclick="window.open(`{{ route('appointment.print', $data->kode_antrian) }}`)">
-									<i class="fa-duotone fa-print"></i> Print
+						<div class="d-inline-block">
+							@if (!$data->payment_status)
+								<button class="btn btn-primary" id="pay-button">
+									<i class="far fa-money-bill-transfer"></i> Bayar
 								</button>
-								{!! Form::open(['route' => ['appointment.pdf', $data->kode_antrian]]) !!}
-								<button class="dropdown-item">
-									<i class="fa-duotone fa-file-pdf"></i> PDF
+							@endif
+							<div class="btn-group" role="group">
+								<button class="btn btn-info dropdown-toggle" data-toggle="dropdown" type="button">
+									<i class="fa-duotone fa-share-all"></i>
 								</button>
-								{!! Form::close() !!}
-								<a class="dropdown-item" href="{{ route('appointment.whatsapp', $data->kode_antrian) }}">
-									<i class="fa-brands fa-whatsapp"></i> Whatsapp
-								</a>
-								<button class="dropdown-item" id="showEmailForm">
-									<i class="fa-duotone fa-envelope"></i> Email
-								</button>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="{{ route('appointment.qrcode', $data->kode_antrian) }}"
+										download="Tiket Antrian-{{ $data->kode_antrian }}.png">
+										<i class="fa-duotone fa-file-download"></i> Unduh QR Code
+									</a>
+									<button class="dropdown-item" onclick="window.open(`{{ route('appointment.print', $data->kode_antrian) }}`)">
+										<i class="fa-duotone fa-print"></i> Print
+									</button>
+									{!! Form::open(['route' => ['appointment.pdf', $data->kode_antrian]]) !!}
+									<button class="dropdown-item">
+										<i class="fa-duotone fa-file-pdf"></i> PDF
+									</button>
+									{!! Form::close() !!}
+									<a class="dropdown-item" href="{{ route('appointment.whatsapp', $data->kode_antrian) }}">
+										<i class="fa-brands fa-whatsapp"></i> Whatsapp
+									</a>
+									<button class="dropdown-item" id="showEmailForm">
+										<i class="fa-duotone fa-envelope"></i> Email
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -79,6 +85,15 @@
 										<th>Perkiraan Jam Periksa</th>
 										<th>:</th>
 										<td>{{ $data->perkiraan_jam }}</td>
+									</tr>
+									<tr>
+										<th>Status Pembayaran</th>
+										<th>:</th>
+										<td>
+											{!! $data->payment_status
+											    ? '<span class="text-success">Sudah Dibayar</span>'
+											    : '<span class="text-danger">Belum Dibayar</span>' !!}
+										</td>
 									</tr>
 								</tbody>
 								<tfoot>
@@ -150,4 +165,35 @@
 				})
 		})
 	</script>
+	@if (!$data->payment_status)
+		<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}">
+		</script>
+		<script>
+			const payButton = document.querySelector('#pay-button');
+			payButton.addEventListener('click', function(e) {
+				e.preventDefault();
+
+				snap.pay('{{ $data->snap_token }}', {
+					// Optional
+					onSuccess: function(result) {
+						/* You may add your own js here, this is just example */
+						// document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+						window.location.reload()
+					},
+					// Optional
+					onPending: function(result) {
+						/* You may add your own js here, this is just example */
+						// document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+						console.log(result)
+					},
+					// Optional
+					onError: function(result) {
+						/* You may add your own js here, this is just example */
+						// document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+						console.log(result)
+					}
+				});
+			});
+		</script>
+	@endif
 @endpush

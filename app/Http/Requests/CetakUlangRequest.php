@@ -15,7 +15,7 @@ class CetakUlangRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'kode_antrian' => 'required|numeric|digits:12',
+			'kode_antrian' => 'required',
 			'tgl_periksa' => 'required|date'
 		];
 	}

@@ -2,20 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CetakUlangRequest;
 use App\Models\UserBooking;
+use App\Services\Midtrans\CreateSnapTokenService;
+use App\Services\Midtrans\GetTransactionStatus;
 use Illuminate\Http\Request;
+use Sawirricardo\Midtrans\Dto\TransactionDto;
+use Sawirricardo\Midtrans\Laravel\Facades\Midtrans;
 
-class CetakUlangController extends Controller
+class PembayaranController extends Controller
 {
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index($kode)
 	{
-		return view('pages.cetak-ulang');
+		$data = UserBooking::where('kode_antrian', $kode)->firstOrFail();
+		if (!$data->snap_token) {
+			$this->update($data);
+		} else {
+			$status = new GetTransactionStatus($data->kode_antrian);
+			$status = (object) $status->getStatus();
+
+			if (!in_array($status->fraud_status, ['accept', 'pending'])) {
+				$this->update($data);
+			}
+		}
+		return view('pages.pembayaran', compact('data'));
 	}
 
 	/**
@@ -45,24 +59,9 @@ class CetakUlangController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(CetakUlangRequest $request)
+	public function show($id)
 	{
-		$validated = $request->validated();
-		$data = UserBooking::join('users', 'user_bookings.user_id', '=', 'users.id')
-			->join('user_pasiens', 'user_pasiens.user_id', '=', 'users.id')
-			->where(function ($query) use ($validated) {
-				$query
-					->where('user_bookings.kode_antrian', $validated['kode_antrian'])
-					->orWhere('user_pasiens.nomor_rekam_medis', $validated['kode_antrian']);
-			})
-			->where('user_bookings.tgl_periksa', $validated['tgl_periksa'])
-			->select('user_bookings.*')
-			->first();
-
-		if (!$data) {
-			return redirect()->back()->withErrors(['kode_antrian' => 'Kode antrian tidak ditemukan'])->withInput();
-		}
-		return redirect(route('appointment.show', $data->kode_antrian));
+		//
 	}
 
 	/**
@@ -83,9 +82,13 @@ class CetakUlangController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, $id)
+	public function update($data)
 	{
-		//
+		$midtrans = new CreateSnapTokenService($data);
+		$snapToken = $midtrans->getSnapToken();
+
+		$data->snap_token = $snapToken;
+		return $data->save();
 	}
 
 	/**

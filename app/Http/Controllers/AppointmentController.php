@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserBooking;
+use App\Services\Midtrans\CreateSnapTokenService;
+use App\Services\Midtrans\GetTransactionStatus;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Milon\Barcode\Facades\DNS2DFacade;
 use Intervention\Image\ImageManagerStatic as Image;
+use Midtrans\Notification;
 
 class AppointmentController extends Controller
 {
@@ -47,7 +50,7 @@ class AppointmentController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//
+		$notif = new Notification();
 	}
 
 	/**
@@ -59,6 +62,15 @@ class AppointmentController extends Controller
 	public function show($kode)
 	{
 		$data = UserBooking::where('kode_antrian', $kode)->firstOrFail();
+
+		if (!$data->payment_status) {
+			$status = new GetTransactionStatus($data->kode_antrian);
+			$status = (object) $status->getStatus();
+
+			if (isset($status->fraud_status) && $status->fraud_status == 'accept') {
+				$data->update(['payment_status' => 1]);
+			}
+		}
 		return view('pages.pendaftaran-online.show', compact('data'));
 	}
 

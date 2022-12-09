@@ -30,7 +30,7 @@ class PoliController extends Controller
 
 		$jamKerja = PoliJadwal::where('hari', $day)->where('poli_id', $request->poli)->first();
 
-		if ($jamKerja) {
+		if ($jamKerja->jam_kerja_buka && $jamKerja->jam_kerja_tutup) {
 			$data = ['data' => $jamKerja->jam_kerja_buka . ' - ' . $jamKerja->jam_kerja_tutup, 'status' => 200];
 		} else {
 			$data = ['errors'    => ['jam_kerja' => ['Tidak ditemukan jadwal pada hari yang dipilih (libur).']], 'status' => 500];
