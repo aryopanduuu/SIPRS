@@ -27,7 +27,7 @@ for(var i = 0; i < chats.length; i++) {
   if(chats[i].typing != undefined) type = 'typing';
   $.chatCtrl('#mychatbox', {
     text: (chats[i].text != undefined ? chats[i].text : ''),
-    picture: (chats[i].position == 'left' ? '../dist/img/avatar/avatar-1.png' : '../dist/img/avatar/avatar-2.png'),
+    picture: (chats[i].position == 'left' ? '../dist/img/avatar/avatar.png' : '../dist/img/avatar/avatar-2.png'),
     position: 'chat-'+chats[i].position,
     type: type
   });
@@ -36,13 +36,13 @@ for(var i = 0; i < chats.length; i++) {
 $("#chat-form").submit(function() {
   var me = $(this);
 
-  if(me.find('input').val().trim().length > 0) {      
+  if(me.find('input').val().trim().length > 0) {
     $.chatCtrl('#mychatbox', {
       text: me.find('input').val(),
       picture: '../dist/img/avatar/avatar-2.png',
     });
     me.find('input').val('');
-  } 
+  }
   return false;
 });
 
@@ -109,12 +109,12 @@ for(var i = 0; i < chats.length; i++) {
 $("#chat-form2").submit(function() {
   var me = $(this);
 
-  if(me.find('input').val().trim().length > 0) {      
+  if(me.find('input').val().trim().length > 0) {
     $.chatCtrl('#mychatbox2', {
       text: me.find('input').val(),
       picture: '../dist/img/avatar/avatar-2.png',
     });
     me.find('input').val('');
-  } 
+  }
   return false;
 });

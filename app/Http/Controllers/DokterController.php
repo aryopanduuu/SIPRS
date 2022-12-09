@@ -14,7 +14,7 @@ class DokterController extends Controller
      */
     public function index()
     {
-        $dokters = User::has('dokter')->get();
+        $dokters = User::join('user_dokters', 'id', '=', 'user_dokters.user_id')->get();
         return view('pages.dokter', compact('dokters'));
     }
 

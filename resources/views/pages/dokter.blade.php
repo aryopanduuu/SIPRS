@@ -14,7 +14,7 @@
                 @foreach($dokters as $dokter)
                 <div class="col-12 col-md-6 col-lg-4 col-xl-4 py-3">
                     <div class="card">
-                        <img class="card-img" alt="" src="{{ asset('assets/img/doctor-06.jpg') }}">
+                        <img class="card-img" alt="" src="{{ asset('assets/img/avatar/'.$dokter['foto']) }}">
                         <div class="card-body text-center">
                             <h4 class="doctor-name"><a href="#">{{ $dokter['nama'] }}</a></h4>
                             <p>
