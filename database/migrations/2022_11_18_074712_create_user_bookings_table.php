@@ -16,7 +16,7 @@ return new class extends Migration
 		Schema::create('user_bookings', function (Blueprint $table) {
 			$table->uuid('id');
 			$table->char('kode_antrian', 12)->unique();
-			$table->char('snap_token', 36);
+			$table->char('snap_token', 36)->nullable();
 			$table->char('nomor_antrian', 4);
 			$table->uuid('user_id');
 			$table->uuid('dokter_id');
