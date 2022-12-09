@@ -15,6 +15,8 @@ return new class extends Migration
 	{
 		Schema::create('kontaks', function (Blueprint $table) {
 			$table->uuid('id')->primary();
+			$table->string('keterangan');
+			$table->string('slug');
 			$table->string('konten');
 			$table->enum('tipe', ['seo', 'kontak']);
 			$table->timestamps();
