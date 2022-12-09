@@ -113,6 +113,7 @@ export default {
 					if (err.response.data.errors) {
 						this.errMessage = err.response.data.errors
 						this.$refs.nomor_rekam_medis.focus()
+						this.$refs.recaptcha.reset()
 						Notiflix.Block.remove('.account-box')
 					}
 				})
