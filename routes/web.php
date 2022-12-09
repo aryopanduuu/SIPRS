@@ -28,6 +28,6 @@ Route::get('/poli', 'PoliController@index')->name('poli');
 
 Route::get('/spesialis', 'SpesialisController@index')->name('spesialis');
 
-Route::get('/kontak', function() {
-    return view('pages.kontak');
-})->name('kontak');
+Route::get('/kontak', 'KontakController@index')->name('kontak');
+
+Route::get('/dokter', 'DokterController@index')->name('dokter');
