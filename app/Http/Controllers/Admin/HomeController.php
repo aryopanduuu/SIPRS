@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,13 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
-		return view('pages.admin.home');
+		$counts = DB::select("SELECT
+		(SELECT COUNT(*) FROM users join user_dokters on user_dokters.user_id = users.id) as dokter,
+		(SELECT COUNT(*) FROM polis) as poli,
+		(SELECT COUNT(*) FROM user_bookings) as pendaftaran_online,
+		(SELECT COUNT(*) FROM user_bookings WHERE DATE(created_at) = CURDATE()) as pendaftaran_online_today");
+		$counts = collect($counts)->first();
+		return view('pages.admin.home', compact('counts'));
 	}
 
 	/**

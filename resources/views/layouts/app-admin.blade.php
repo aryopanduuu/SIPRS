@@ -30,22 +30,14 @@
 				<ul class="navbar-nav navbar-right">
 					<li class="dropdown">
 						<a class="nav-link dropdown-toggle nav-link-lg nav-link-user" data-toggle="dropdown" href="javascript:;">
-							<img class="rounded-circle mr-1" src="{{ asset('assets/img/doctor-01.jpg') }}" alt="image">
-							<div class="d-sm-none d-lg-inline-block">Hi, Ujang Maman</div>
+							<div class="d-sm-none d-lg-inline-block">{{ auth()->user()->username }}</div>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
-							<div class="dropdown-title">Logged in 5 min ago</div>
-							<a class="dropdown-item has-icon" href="features-profile.html">
-								<i class="far fa-user"></i> Profile
-							</a>
-							<a class="dropdown-item has-icon" href="features-activities.html">
-								<i class="fas fa-bolt"></i> Activities
-							</a>
-							<a class="dropdown-item has-icon" href="features-settings.html">
-								<i class="fas fa-cog"></i> Settings
+							<a class="dropdown-item has-icon" href="">
+								<i class="fas fa-cog"></i> Pengaturan
 							</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item has-icon text-danger" href="#">
+							<a class="dropdown-item has-icon text-danger" href="{{ route('admin.logout') }}">
 								<i class="fas fa-sign-out-alt"></i> Logout
 							</a>
 						</div>
