@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Poli;
+use App\Models\Spesialis;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,12 +16,15 @@ class DokterController extends Controller
 	 */
 	public function index()
 	{
-		$dokters = User::join('user_dokters', 'id', '=', 'user_dokters.user_id')
+		$data = User::join('user_dokters', 'id', '=', 'user_dokters.user_id')
 			->join('user_dokter_polis', 'user_dokter_polis.user_id', '=', 'users.id')
 			->join('polis', 'user_dokter_polis.poli_id', '=', 'polis.id')
 			->select('users.id', 'users.nama', 'user_dokters.foto', 'polis.nama_poli as poli')
-			->get();
-		return view('pages.dokter', compact('dokters'));
+			->orderBy('nama', 'ASC')
+			->paginate(8);
+		$poli = Poli::pluck('nama_poli', 'id');
+		$spesialis = Spesialis::pluck('gelar', 'id');
+		return view('pages.dokter.index', compact('data', 'poli', 'spesialis'));
 	}
 
 	/**
@@ -51,7 +56,12 @@ class DokterController extends Controller
 	 */
 	public function show($id)
 	{
-		//
+		$data = User::join('user_dokters', 'id', '=', 'user_dokters.user_id')
+			->join('user_dokter_polis', 'user_dokter_polis.user_id', '=', 'users.id')
+			->join('polis', 'user_dokter_polis.poli_id', '=', 'polis.id')
+			->select('users.id', 'users.nama', 'user_dokters.foto', 'polis.nama_poli as poli')
+			->firstOrFail();;
+		return view('pages.dokter.show', compact('data'));
 	}
 
 	/**

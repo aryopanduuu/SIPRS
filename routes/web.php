@@ -33,4 +33,7 @@ Route::get('/spesialis', 'SpesialisController@index')->name('spesialis');
 
 Route::get('/kontak', 'KontakController@index')->name('kontak');
 
-Route::get('/dokter', 'DokterController@index')->name('dokter');
+Route::prefix('dokter')->name('dokter.')->group(function () {
+	Route::get('/', 'DokterController@index')->name('index');
+	Route::get('{id}', 'DokterController@show')->name('show');
+});
