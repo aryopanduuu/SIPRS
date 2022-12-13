@@ -50,6 +50,13 @@ Route::middleware(['auth'])->group(function () {
 		Route::get('{id}/jam-kerja', 'JadwalHarianController@show')->name('show');
 	});
 
+	Route::prefix('pendaftaran-online')->name('pendaftaran-online.')->group(function () {
+		Route::get('/', 'AppointmentController@index')->name('index');
+		Route::get('ubah/{id}', 'AppointmentController@edit')->name('edit');
+		Route::patch('ubah/{id}', 'AppointmentController@update')->name('update');
+		Route::get('{id}/tiket', 'AppointmentController@show')->name('show');
+	});
+
 	Route::prefix('kontak')->name('kontak.')->group(function () {
 		Route::get('/', 'KontakController@index')->name('index');
 		Route::get('ubah/{id}', 'KontakController@edit')->name('edit');

@@ -51,7 +51,7 @@ class DokterDataTable extends DataTable
 				$query->whereRaw("nama_poli like ?", ["%{$keyword}%"]);
 			})
 			->setRowId('id')
-			->rawColumns(['foto', 'action']);;
+			->rawColumns(['foto', 'action']);
 	}
 
 	/**

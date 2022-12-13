@@ -132,7 +132,7 @@ class AppServiceProvider extends ServiceProvider
 								],
 							],
 							[
-								'url'         => route('admin.poli.index'),
+								'url'         => route('admin.pendaftaran-online.index'),
 								'title'       => 'Pendaftaran Online',
 								'name'        => 'admin.pendaftaran-online.index',
 								'icon'        => 'clipboard-list-check',
