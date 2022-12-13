@@ -14,14 +14,31 @@ class DokterController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
 		$data = User::join('user_dokters', 'id', '=', 'user_dokters.user_id')
 			->join('user_dokter_polis', 'user_dokter_polis.user_id', '=', 'users.id')
-			->join('polis', 'user_dokter_polis.poli_id', '=', 'polis.id')
+			->join('polis', 'user_dokter_polis.poli_id', '=', 'polis.id');
+
+		if ($request->has('poli')) {
+			$data = $data->where('user_dokter_polis.poli_id', $request->poli);
+		}
+
+		if ($request->has('spesialis')) {
+			$data = $data->join('user_dokter_spesialis', 'user_dokter_spesialis.user_id', '=', 'users.id')
+				->where('user_dokter_spesialis.spesialis_id', $request->spesialis);
+		}
+
+		if ($request->has('dokter')) {
+			$data = $data->whereRaw("users.nama like ?", ["%{$request->dokter}%"]);
+		}
+
+		$data = $data
 			->select('users.id', 'users.nama', 'user_dokters.foto', 'polis.nama_poli as poli')
 			->orderBy('nama', 'ASC')
-			->paginate(8);
+			->paginate(8)
+			->withQueryString();
+
 		$poli = Poli::pluck('nama_poli', 'id');
 		$spesialis = Spesialis::pluck('gelar', 'id');
 		return view('pages.dokter.index', compact('data', 'poli', 'spesialis'));

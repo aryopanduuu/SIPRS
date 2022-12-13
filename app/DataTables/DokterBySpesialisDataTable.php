@@ -25,9 +25,8 @@ class DokterBySpesialisDataTable extends DataTable
 	public function dataTable(QueryBuilder $query): EloquentDataTable
 	{
 		return (new EloquentDataTable($query))
-			->addColumn('action', 'dokterbyspesialis.action')
-			->editColumn('userDetail.nama', function ($query) {
-				return Str::limit($query->userDetail->nama, 20, $query->userDetail->nama);
+			->editColumn('nama', function ($query) {
+				return Str::limit($query->nama, 20, $query->nama);
 			})
 			->setRowId('id');
 	}
@@ -41,7 +40,8 @@ class DokterBySpesialisDataTable extends DataTable
 	public function query(UserDokterSpesialis $model): QueryBuilder
 	{
 		return $model->where('spesialis_id', $this->id)
-			->with('userDetail')
+			->leftJoin('users', 'user_dokter_spesialis.user_id', '=', 'users.id')
+			->select('users.nama')
 			->newQuery();
 	}
 
@@ -73,7 +73,7 @@ class DokterBySpesialisDataTable extends DataTable
 				->exportable(false)
 				->addClass('text-center')
 				->renderRaw('function (data, type, row, meta) {return meta.row + 1;}'),
-			Column::make('userDetail.nama')->title('Nama Dokter'),
+			Column::make('nama')->title('Nama Dokter'),
 		];
 	}
 
