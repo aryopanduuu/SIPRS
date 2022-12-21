@@ -15,7 +15,7 @@ class PoliController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index(PoliDataTable $dataTable)
+	public function index(Request $request, PoliDataTable $dataTable)
 	{
 		return $dataTable->render('pages.admin.poli.index');
 	}

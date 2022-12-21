@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Admin extends Authenticatable
 {
 	use HasFactory, HasUuids;
+
+	public function hasRole($role)
+	{
+		return $this->where('role', $role)->first();
+	}
 }
