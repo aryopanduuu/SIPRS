@@ -12,34 +12,36 @@
 
 @section('content')
 	<div class="row">
-		<div class="col-lg-4 col-md-6 col-sm-6 col-12">
-			<div class="card card-statistic-1">
-				<div class="card-icon bg-primary">
-					<i class="far fa-user-doctor"></i>
-				</div>
-				<div class="card-wrap">
-					<div class="card-header">
-						<h4>Dokter</h4>
+		@if (auth()->user()->role == 'super_admin')
+			<div class="col-lg-4 col-md-6 col-sm-6 col-12">
+				<div class="card card-statistic-1">
+					<div class="card-icon bg-primary">
+						<i class="far fa-user-doctor"></i>
 					</div>
-					<div class="card-body">
-						{{ $counts->dokter }}
+					<div class="card-wrap">
+						<div class="card-header">
+							<h4>Dokter</h4>
+						</div>
+						<div class="card-body">
+							{{ $counts->dokter }}
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-lg-4 col-md-6 col-sm-6 col-12">
-			<div class="card card-statistic-1">
-				<div class="card-icon bg-primary">
-					<i class="far fa-hospital-user"></i>
-				</div>
-				<div class="card-wrap">
-					<div class="card-header">
-						<h4>Poli</h4>
+			<div class="col-lg-4 col-md-6 col-sm-6 col-12">
+				<div class="card card-statistic-1">
+					<div class="card-icon bg-primary">
+						<i class="far fa-hospital-user"></i>
 					</div>
-					<div class="card-body">{{ $counts->poli }}</div>
+					<div class="card-wrap">
+						<div class="card-header">
+							<h4>Poli</h4>
+						</div>
+						<div class="card-body">{{ $counts->poli }}</div>
+					</div>
 				</div>
 			</div>
-		</div>
+		@endif
 		<div class="col-lg-4 col-md-6 col-sm-6 col-12">
 			<div class="card card-statistic-1">
 				<div class="card-icon bg-primary">

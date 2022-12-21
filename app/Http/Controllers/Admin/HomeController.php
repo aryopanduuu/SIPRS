@@ -15,11 +15,14 @@ class HomeController extends Controller
 	 */
 	public function index()
 	{
-		$counts = DB::select("SELECT
-		(SELECT COUNT(*) FROM users join user_dokters on user_dokters.user_id = users.id) as dokter,
-		(SELECT COUNT(*) FROM polis) as poli,
-		(SELECT COUNT(*) FROM user_bookings) as pendaftaran_online,
-		(SELECT COUNT(*) FROM user_bookings WHERE DATE(created_at) = CURDATE()) as pendaftaran_online_today");
+		$query = "SELECT";
+		if (auth()->user()->role == 'super_admin') {
+			$query .= "(SELECT COUNT(*) FROM users join user_dokters on user_dokters.user_id = users.id) as dokter,
+			(SELECT COUNT(*) FROM polis) as poli,";
+		}
+		$query .= "(SELECT COUNT(*) FROM user_bookings) as pendaftaran_online,
+			(SELECT COUNT(*) FROM user_bookings WHERE DATE(created_at) = CURDATE()) as pendaftaran_online_today";
+		$counts = DB::select($query);
 		$counts = collect($counts)->first();
 		return view('pages.admin.home', compact('counts'));
 	}

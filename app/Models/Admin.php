@@ -12,6 +12,6 @@ class Admin extends Authenticatable
 
 	public function hasRole($role)
 	{
-		return $this->where('role', $role)->first();
+		return $this->where('role', $role)->count();
 	}
 }

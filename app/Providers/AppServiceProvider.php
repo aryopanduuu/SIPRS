@@ -50,39 +50,39 @@ class AppServiceProvider extends ServiceProvider
 						]
 					],
 					[
-						'url' => route('poli'),
-						'title' => 'Poli',
+						'url'      => route('poli'),
+						'title'    => 'Poli',
 						'name'     => 'poli',
 						'hasChild' => true
 					],
 					[
-						'url' =>  route('spesialis.index'),
-						'title' => 'Spesialis',
+						'url'      => route('spesialis.index'),
+						'title'    => 'Spesialis',
 						'name'     => 'spesialis',
 						'hasChild' => true
 					],
 					[
-						'url' => '',
-						'title' => 'Dokter',
+						'url'      => '',
+						'title'    => 'Dokter',
 						'name'     => 'dokter',
 						'hasChild' => true
 					],
 					[
-						'url' => '',
-						'title' => 'Kontak',
+						'url'      => '',
+						'title'    => 'Kontak',
 						'name'     => 'kontak',
 						'hasChild' => false
 					],
 
 					[
-						'url' => route('dokter.index'),
-						'title' => 'Dokter',
+						'url'      => route('dokter.index'),
+						'title'    => 'Dokter',
 						'name'     => 'dokter',
 						'hasChild' => true
 					],
 					[
-						'url' => route('kontak'),
-						'title' => 'Kontak',
+						'url'      => route('kontak'),
+						'title'    => 'Kontak',
 						'name'     => 'kontak',
 						'hasChild' => false
 					]
@@ -91,13 +91,15 @@ class AppServiceProvider extends ServiceProvider
 				$menu = [
 					[
 						'title' => 'Menu Utama',
-						'menu' => [
+						'role'  => 'any',
+						'menu'  => [
 							[
 								'url'      => route('admin.index'),
 								'title'    => 'Dashboard',
 								'name'     => 'admin.index',
 								'icon'     => 'tachometer',
-								'hasChild' => false
+								'hasChild' => false,
+								'role'     => 'any',
 							],
 							[
 								'url'         => route('admin.poli.index'),
@@ -105,7 +107,8 @@ class AppServiceProvider extends ServiceProvider
 								'name'        => 'admin.poli.index',
 								'icon'        => 'hospital-user',
 								'hasChild'    => true,
-								'prefixChild' => 'poli'
+								'prefixChild' => 'poli',
+								'role'        => 'super_admin',
 							],
 							[
 								'url'         => route('admin.dokter.index'),
@@ -113,7 +116,8 @@ class AppServiceProvider extends ServiceProvider
 								'name'        => 'admin.dokter.index',
 								'icon'        => 'user-doctor',
 								'hasChild'    => true,
-								'prefixChild' => 'dokter'
+								'prefixChild' => 'dokter',
+								'role'        => 'super_admin',
 							],
 							[
 								'url'         => route('admin.spesialis.index'),
@@ -121,7 +125,8 @@ class AppServiceProvider extends ServiceProvider
 								'name'        => 'admin.spesialis.index',
 								'icon'        => 'stethoscope',
 								'hasChild'    => true,
-								'prefixChild' => 'spesialis'
+								'prefixChild' => 'spesialis',
+								'role'        => 'super_admin',
 							],
 							[
 								'url'         => route('admin.poli.index'),
@@ -130,16 +135,17 @@ class AppServiceProvider extends ServiceProvider
 								'icon'        => 'calendar-day',
 								'hasChild'    => true,
 								'prefixChild' => 'jadwal',
-								'hasSubMenu' => true,
-								'subMenu' => [
+								'role'        => 'super_admin',
+								'hasSubMenu'  => true,
+								'subMenu'     => [
 									[
-										'title' => 'Harian',
-										'url' => route('admin.jadwal-harian.index'),
+										'title'  => 'Harian',
+										'url'    => route('admin.jadwal-harian.index'),
 										'prefix' => ['jadwal', 'harian'],
 									],
 									[
-										'title' => 'Hari Libur',
-										'url' => '',
+										'title'  => 'Hari Libur',
+										'url'    => '',
 										'prefix' => ['jadwal', 'libur'],
 									],
 								],
@@ -151,27 +157,31 @@ class AppServiceProvider extends ServiceProvider
 								'icon'        => 'clipboard-list-check',
 								'hasChild'    => true,
 								'prefixChild' => 'pendaftaran-online',
+								'role'        => 'any',
 							]
 						]
 					],
 					[
 						'title' => 'Informasi Website',
-						'menu' => [
+						'role'  => 'super_admin',
+						'menu'  => [
 							[
-								'url'      => route('admin.index'),
-								'title'    => 'Deskripsi/SEO',
-								'name'     => 'admin.seo.index',
-								'icon'     => 'text',
-								'hasChild' => true,
+								'url'         => route('admin.index'),
+								'title'       => 'Deskripsi/SEO',
+								'name'        => 'admin.seo.index',
+								'icon'        => 'text',
+								'hasChild'    => true,
 								'prefixChild' => 'seo',
+								'role'  => 'super_admin',
 							],
 							[
-								'url'      => route('admin.kontak.index'),
-								'title'    => 'Kontak',
-								'name'     => 'admin.kontak.index',
-								'icon'     => 'contact-book',
-								'hasChild' => true,
+								'url'         => route('admin.kontak.index'),
+								'title'       => 'Kontak',
+								'name'        => 'admin.kontak.index',
+								'icon'        => 'contact-book',
+								'hasChild'    => true,
 								'prefixChild' => 'kontak',
+								'role'  => 'super_admin',
 							],
 						]
 					]

@@ -8,7 +8,9 @@
 		</div>
 		<ul class="sidebar-menu">
 			@foreach ($menu as $header)
-				<li class="menu-header">{{ $header['title'] }}</li>
+				@if (auth()->user()->hasRole($header['role']) || $header['role'] == 'any')
+					<li class="menu-header">{{ $header['title'] }}</li>
+				@endif
 				@foreach ($header['menu'] as $item)
 					@if (Route::currentRouteName() == $item['name'] ||
 					    ($item['hasChild'] && Request::segment(2) == $item['prefixChild']))
@@ -18,7 +20,9 @@
 						@else
 						<li>
 					@endif
-					@if (isset($item['hasSubMenu']) && $item['hasSubMenu'])
+					@if (isset($item['hasSubMenu']) &&
+					    $item['hasSubMenu'] &&
+					    auth()->user()->hasRole($item['role'] || $item['role'] == 'any'))
 						<a class="nav-link has-dropdown" data-toggle="dropdown" href="javascript:;">
 							<i class="far fa-{{ $item['icon'] }}"></i><span>{{ $item['title'] }}</span>
 						</a>
@@ -33,7 +37,7 @@
 								</li>
 							@endforeach
 						</ul>
-					@else
+					@elseif(auth()->user()->hasRole($item['role']) || $item['role'] == 'any')
 						<a class="nav-link" href="{{ $item['url'] }}">
 							<i class="far fa-{{ $item['icon'] }}"></i><span>{{ $item['title'] }}</span>
 						</a>
