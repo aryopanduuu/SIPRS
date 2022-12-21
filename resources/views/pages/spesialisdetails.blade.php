@@ -3,12 +3,13 @@
     <div class="main-content">
 
         <div class="page-header">
-            @foreach ($datas as $spd)
+            @foreach ($gelar as $spd)
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
                             <div class="page-title">
-                                <span> {{ $datas->spesialisDetail->gelar }}</span>
+                                <span> {{ $spd->gelar }}</span>
+                                {{-- <span> Test</span> --}}
                             </div>
                         </div>
                     </div>
@@ -29,17 +30,15 @@
                                 <p>
                                 </p>
                                 <ul class="list-square">
-                                    <li>--</li>
-                                    <li>--</li>
-                                    <li>--</li>
-                                    <li>--</li>
+                                    @foreach ($datas as $idd)
+                                        <li>{{ $idd->user_id }}</li>
+                                    @endforeach
                                 </ul>
-                                <p>--
                                 </p>
                             </div>
                         </div>
                     </div>
-                    <aside class="col-md-4 sidebar-right">
+                    {{-- <aside class="col-md-4 sidebar-right">
 
                         <div class="widget search-widget">
                             <form class="search-form">
@@ -52,9 +51,9 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
+                        </div> --}}
 
-                        <div class="widget category-widget">
+                    {{-- <div class="widget category-widget">
                             <h5>List Spesialis</h5>
                             <ul class="categories">
                                 <li>
@@ -73,7 +72,7 @@
                                     <a href="#">--</a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> --}}
                 </div>
                 </aside>
             </div>

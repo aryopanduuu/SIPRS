@@ -92,7 +92,6 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title">{{ $spesial['gelar'] }}</h5>
                                 <h5 class="card-title">{{ $spesial['gelar_singkatan'] }}</h5>
-                                <p class="card-text">Deskripsi Spesiali</p>
                                 <a href="{{ route('spesialis.show', $spesial->id) }}" class="btn btn-primary">
                                     Lihat Dokter
                                 </a>

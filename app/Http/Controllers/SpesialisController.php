@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Spesialis;
 use App\Models\UserDokterSpesialis;
 use Illuminate\Http\Request;
@@ -50,12 +51,15 @@ class SpesialisController extends Controller
     public function show($id)
     {
         $spesl = Spesialis::where('id', $id)->firstOrFail();
+
         $datas = UserDokterSpesialis::where('spesialis_id', $id)->get();
+        $datas = DB::table('user_dokter_spesialis as a')->join('spesialis as b', 'a.spesialis_id', '=', 'b.id')->where('a.spesialis_id', '=', $id)->get();
+        $gelar = DB::table('user_dokter_spesialis as a')->join('spesialis as b', 'a.spesialis_id', '=', 'b.id')->where('a.spesialis_id', '=', $id)->take(1)->get();
 
-        return view('pages.spesialisdetails', compact('datas'));
 
-        // $spesl = Spesialis::where('spesialis', $id)();
-        // return view('pages.spesialisdetails', compact('spesl'));
+        // return $datas
+
+        return view('pages.spesialisdetails')->with('datas', $datas)->with('gelar', $gelar);
     }
 
     /**

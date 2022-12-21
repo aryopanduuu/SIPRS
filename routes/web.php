@@ -23,8 +23,6 @@ Route::get('/poli', 'PoliController@index')->name('poli');
 Route::prefix('spesialis')->name('spesialis.')->group(function () {
 	Route::get('/', 'SpesialisController@index')->name('index');
 	Route::get('{id}/detail', 'SpesialisController@show')->name('show');
-	route::get('{id}/edit', 'SpesialisController@edit')->name('edit');
-	route::get('{id}/delete', 'SpesialisController@delete')->name('delete');
 });
 // Route::get('/spesialisdetail', 'SpesialisController@show')->name('spesialisdetail');
 
