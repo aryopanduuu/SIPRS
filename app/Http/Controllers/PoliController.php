@@ -14,7 +14,7 @@ class PoliController extends Controller
 	 */
 	public function index()
 	{
-		$data = Poli::paginate(6);
+		$data = Poli::orderBy('nama_poli', 'ASC')->paginate(6);
 		return view('pages.poli', compact('data'));
 	}
 
