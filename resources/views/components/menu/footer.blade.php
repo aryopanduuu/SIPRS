@@ -29,7 +29,7 @@
 								<a href="{{ route('poli') }}">Poli</a>
 							</li>
 							<li>
-								<a href="{{ route('spesialis') }}">Spesialis</a>
+								<a href="{{ route('spesialis.index') }}">Spesialis</a>
 							</li>
 							{{-- <li> --}}
 							{{-- <a href="{{ route('dokter') }}">Dokter</a> --}}

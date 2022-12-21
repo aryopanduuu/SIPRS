@@ -37,3 +37,11 @@
 .cursor-pointer {
     cursor: pointer;
 }
+
+.radius-0 {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+}
