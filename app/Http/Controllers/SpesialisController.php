@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Spesialis;
+use App\Models\UserDokterSpesialis;
 use Illuminate\Http\Request;
+use Termwind\Components\Span;
 
 class SpesialisController extends Controller
 {
@@ -47,7 +49,13 @@ class SpesialisController extends Controller
      */
     public function show($id)
     {
-        //
+        $spesl = Spesialis::where('id', $id)->firstOrFail();
+        $datas = UserDokterSpesialis::where('spesialis_id', $id)->get();
+
+        return view('pages.spesialisdetails', compact('datas'));
+
+        // $spesl = Spesialis::where('spesialis', $id)();
+        // return view('pages.spesialisdetails', compact('spesl'));
     }
 
     /**
