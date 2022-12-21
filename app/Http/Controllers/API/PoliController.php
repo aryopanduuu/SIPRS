@@ -52,6 +52,34 @@ class PoliController extends Controller
 		return $listDay[$day];
 	}
 
+	public function jadwal(Request $request)
+	{
+		$data = Poli::where('id', $request->id)->first();
+		if (!$data) {
+			$response = ['message' => 'Terjadi kesalahan.', 'status' => 403];
+		} else {
+			$data = [];
+			$jadwal = PoliJadwal::where('poli_id', $request->id)
+				->orderByRaw("FIELD(hari, 'senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu')")
+				->get();
+
+			$hari = ['senin', 'selasa', 'rabu', 'kamis', 'jumat', 'sabtu', 'minggu'];
+
+			$data = ['status' => 200];
+			foreach ($hari as $index => $item) {
+				$data['data'][$item] = '-';
+				foreach ($jadwal as $e) {
+					if ($item == $e->hari && $e->jamKerja) {
+						$data['data'][$item] = $e->jamKerja;
+						break;
+					}
+				}
+			};
+			$response = $data;
+		}
+		return response()->json($response, $response['status']);
+	}
+
 	/**
 	 * Store a newly created resource in storage.
 	 *

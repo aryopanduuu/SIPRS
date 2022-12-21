@@ -23,7 +23,7 @@
 										{{ Str::limit($item->gelar, 25, '...') }}</h5>
 									<h6 class="text-muted">{{ $item->gelar_singkatan }}</h6>
 								</div>
-								<a class="btn btn-primary rounded-0" href="{{ route('spesialis.show', $item->id) }}">
+								<a class="btn btn-primary btn-sm rounded-0" href="{{ route('spesialis.show', $item->id) }}">
 									Lihat Dokter
 								</a>
 							</div>

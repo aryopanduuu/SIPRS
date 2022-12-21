@@ -1,122 +1,92 @@
 @extends('layouts.app')
 @section('content')
-    <section class="section departments">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-header">
-                        <h3 class="header-title">Poliklinik</h3>
-                        <div class="line"></div>
-                        <p>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                @foreach ($polis as $poli)
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <h5 class="card-title">{{ $poli['nama_poli'] }}</h5>
-                                <h5 class="card-title"></h5>
-                                <p class="card-text">Deskripsi Poli</p>
-                                <div class="btn-group">
-                                    <button class="btn btn-primary" type="button" data-toggle="collapse"
-                                        data-target="#collapseExample" aria-expanded="false"
-                                        aria-controls="collapseExample">
-                                        Jadwal
-                                    </button>
-                                    {{-- <div class="card card-body">
-                                        <div class="collapse" id="collapseExample">
-                                        </div>
-                                    </div> --}}
-                                </div>
-                            </div>
-                            <div class="card-footer px-5" id="collapseExample">
-                                <div class="widget working-widget">
-                                    <div class="working-hours pt-3">
-                                        <h3>Working Hours</h3>
-                                        <ul>
-                                            <li>
-                                                <span>Monday</span> <b>19:00 - 20:00</b>
-                                            </li>
-                                            <li>
-                                                <span>Tuesday</span> <b></b>
-                                            </li>
-                                            <li>
-                                                <span>Wednesday</span> <b></b>
-                                            </li>
-                                            <li>
-                                                <span>Thursday</span> <b></b>
-                                            </li>
-                                            <li>
-                                                <span>Friday</span> <b></b>
-                                            </li>
-                                            <li>
-                                                <span>Saturday</span> <b></b>
-                                            </li>
-                                            <li>
-                                                <span>Sunday</span> <b>Closed</b>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                {{-- <span class="d-flex justify-content-center">Working Hours</span>
-                                <ul class="list-unstyled mt-3">
-                                    <li>
-                                        <span>Monday</span> <b>9.00 AM To 5.00 PM</b>
-                                    </li>
-                                    <li>
-                                        <span>Tuesday</span> <b>9.00 AM To 5.00 PM </b>
-                                    </li>
-                                    <li>
-                                        <span>Wednesday</span> <b>9.00 AM To 5.00 PM</b>
-                                    </li>
-                                    <li>
-                                        <span>Thursday</span> <b>9.00 AM To 5.00 PM</b>
-                                    </li>
-                                    <li>
-                                        <span>Friday</span> <b>9.00 AM To 5.00 PM</b>
-                                    </li>
-                                    <li>
-                                        <span>Saturday</span> <b>11.00 AM To 3.00 PM</b>
-                                    </li>
-                                    <li>
-                                        <span>Sunday</span> <b>Closed</b>
-                                    </li>
-                                </ul> --}}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-
-
-
-
-
-
-
-
-            {{--
-            <div class="row">
-                @foreach ($polis as $poli)
-                    <div class="col-md-4">
-                        <div class="dept-box">
-                            <div class="dept-img">
-                                <a href="department-details.html">
-                                    <img width="67" height="80" alt="Dentists" src="assets/img/icon-04.png"></a>
-                            </div>
-                            <h4>
-                                <a href="department-details.html"> {{ $poli['nama_poli'] }}</a>
-                            </h4>
-                            <p>Deskripsi Poli
-                            </p>
-                        </div>
-                    </div>
-                @endforeach
-            </div> --}}
-        </div>
-    </section>
+	<div class="page-header">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="page-title">
+						<span>Poli</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section class="section departments">
+		<div class="container">
+			<div class="row">
+				@foreach ($data as $item)
+					<div class="col-12 col-sm-6 col-md-4 p-2">
+						<div class="card p-3 rounded-0">
+							<div class="card-body text-center">
+								<h5 class="font-weight-bolder" data-toggle="tooltip" title="{{ $item->nama_poli }}">
+									{{ Str::limit($item->nama_poli, 20, '...') }}
+								</h5>
+								<button class="btn btn-primary btn-sm mt-3 rounded-0 showJadwal" data-id="{{ $item->id }}">Lihat
+									Jadwal</button>
+							</div>
+						</div>
+					</div>
+				@endforeach
+				<div class="d-flex justify-content-center mt-3 col-12">
+					{{ $data->links('pagination::bootstrap-4') }}
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="modal fade" id="modalJadwal" tabindex="-1">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-body">
+					<table class="table">
+						<thead>
+							<tr class="text-center">
+								<th>Senin</th>
+								<th>Selasa</th>
+								<th>Rabu</th>
+								<th>Kamis</th>
+								<th>Jumat</th>
+								<th>Sabtu</th>
+								<th>Minggu</th>
+							</tr>
+						</thead>
+						<tbody id="tableModalBody"></tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" data-dismiss="modal" type="button">Tutup</button>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection
+
+@push('custom-js')
+	<script src="{{ asset('assets/js/axios.min.js') }}"></script>
+	<script>
+		$('[data-toggle="tooltip"]').tooltip()
+		$('.showJadwal').on('click', function(e) {
+			$('#tableModalBody').html('')
+			let id = $(this).data('id');
+			axios({
+					method: 'POST',
+					url: `{{ route('api.jadwal-poli') }}`,
+					data: {
+						id: id,
+					},
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					}
+				})
+				.then((res) => {
+					let dataJadwal = '<tr>'
+					Object.values(res.data.data).forEach((item, val) => {
+						dataJadwal += `<td class="text-center">${item}</td>`
+					})
+					dataJadwal += '</tr>'
+					$('#tableModalBody').append(dataJadwal)
+					$('#modalJadwal').modal()
+				})
+				.catch((err) => {})
+		})
+	</script>
+@endpush

@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/getPoli', 'PoliController@index')->name('poli');
 Route::post('/getJamKerjaPoli', 'PoliController@jamKerja')->name('jam-kerja-poli');
+Route::post('/getJadwalPoli', 'PoliController@jadwal')->name('jadwal-poli');
 
 Route::prefix('dokter')->name('dokter.')->group(function () {
 	Route::post('getListDokter', 'DokterController@index')->name('listDokter');
