@@ -56,11 +56,24 @@ class AppServiceProvider extends ServiceProvider
 						'hasChild' => true
 					],
 					[
-						'url' =>  route('spesialis'),
+						'url' =>  route('spesialis.index'),
 						'title' => 'Spesialis',
 						'name'     => 'spesialis',
 						'hasChild' => true
 					],
+					[
+						'url' => '',
+						'title' => 'Dokter',
+						'name'     => 'dokter',
+						'hasChild' => true
+					],
+					[
+						'url' => '',
+						'title' => 'Kontak',
+						'name'     => 'kontak',
+						'hasChild' => false
+					],
+
 					[
 						'url' => route('dokter.index'),
 						'title' => 'Dokter',

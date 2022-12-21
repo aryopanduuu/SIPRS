@@ -30,7 +30,10 @@ Route::prefix('pendaftaran-online')->name('appointment.')->group(function () {
 
 Route::get('/poli', 'PoliController@index')->name('poli');
 
-Route::get('/spesialis', 'SpesialisController@index')->name('spesialis');
+Route::prefix('spesialis')->name('spesialis.')->group(function () {
+	Route::get('/', 'SpesialisController@index')->name('index');
+	Route::get('{id}/detail', 'SpesialisController@show')->name('show');
+});
 
 Route::get('/kontak', 'KontakController@index')->name('kontak');
 
