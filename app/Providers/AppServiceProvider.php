@@ -153,7 +153,7 @@ class AppServiceProvider extends ServiceProvider
 								'icon'        => 'text',
 								'hasChild'    => true,
 								'prefixChild' => 'seo',
-								'role'  => 'super_admin',
+								'role'        => 'super_admin',
 							],
 							[
 								'url'         => route('admin.kontak.index'),
@@ -162,7 +162,7 @@ class AppServiceProvider extends ServiceProvider
 								'icon'        => 'contact-book',
 								'hasChild'    => true,
 								'prefixChild' => 'kontak',
-								'role'  => 'super_admin',
+								'role'        => 'super_admin',
 							],
 						]
 					],
@@ -173,11 +173,20 @@ class AppServiceProvider extends ServiceProvider
 							[
 								'url'         => route('admin.admin.index'),
 								'title'       => 'Admin',
-								'name'        => 'admin.index',
-								'icon'        => 'text',
+								'name'        => 'admin.admin.index',
+								'icon'        => 'user-bounty-hunter',
 								'hasChild'    => true,
 								'prefixChild' => 'admin',
-								'role'  => 'super_admin',
+								'role'        => 'super_admin',
+							],
+							[
+								'url'         => route('admin.pengaturan.index'),
+								'title'       => 'Pengaturan',
+								'name'        => 'admin.pengaturan.index',
+								'icon'        => 'gears',
+								'hasChild'    => true,
+								'prefixChild' => 'pengaturan',
+								'role'        => 'super_admin',
 							],
 						]
 					]
