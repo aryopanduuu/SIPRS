@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pengaturan;
 use App\Models\PoliJadwal;
 use App\Models\User;
 use App\Models\UserBooking;
@@ -39,7 +40,8 @@ class DokterController extends Controller
 				->latest()->first('perkiraan_jam');
 
 			if ($latest) {
-				$perkiraan_jam = date('h:i', strtotime('+30 minutes', strtotime($latest->perkiraan_jam)));
+				$jarak = Pengaturan::where('slug', 'jarak-perkiraan-periksa')->first()->konten;
+				$perkiraan_jam = date('h:i', strtotime('+' . $jarak . ' minutes', strtotime($latest->perkiraan_jam)));
 			} else {
 				$day = $this->getDay(Str::lower(date('D', strtotime($request->tgl_periksa))));
 				$perkiraan_jam = PoliJadwal::where('poli_id', $request->poli)

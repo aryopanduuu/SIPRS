@@ -7,6 +7,7 @@ use App\Http\Requests\API\NomorRekamMedisRequest;
 use App\Http\Requests\sendEmailTicketRequest;
 use App\Http\Requests\TglPemeriksaanRequest;
 use App\Mail\TiketAntrian;
+use App\Models\Pengaturan;
 use App\Models\User;
 use App\Models\UserBooking;
 use App\Services\Midtrans\CreateSnapTokenService;
@@ -87,9 +88,10 @@ class AppointmentController extends Controller
 				'perkiraan_jam' => $perkiraan_jam,
 			]);
 
+			$price = Pengaturan::where('slug', 'harga-pendaftaran-online')->first()->konten;
 			$param = [
 				'kode_antrian' => $create->kode_antrian,
-				'price' => 10000,
+				'price' => $price,
 				'customer' => [
 					'first_name' => $user->nama,
 					'phone' => $user->no_hp,

@@ -86,7 +86,8 @@ class UserBooking extends Model
 			->latest()->first('perkiraan_jam');
 
 		if ($data) {
-			$perkiraan_jam = date('h:i', strtotime('+30 minutes', strtotime($data->perkiraan_jam)));
+			$jarak = Pengaturan::where('slug', 'jarak-perkiraan-periksa')->first()->konten;
+			$perkiraan_jam = date('h:i', strtotime('+' . $jarak . ' minutes', strtotime($data->perkiraan_jam)));
 		} else {
 			$day = self::getDay(Str::lower(date('D', strtotime($tgl_periksa))));
 			$perkiraan_jam = PoliJadwal::where('poli_id', $poli)
