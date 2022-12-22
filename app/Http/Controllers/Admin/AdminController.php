@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -79,7 +80,14 @@ class AdminController extends Controller
 	 */
 	public function edit($id)
 	{
-		//
+		$data = Admin::where('id', $id)->where('role', 'admin')->firstOrFail();
+		$page = [
+			'title' => 'Ubah',
+			'currentRoute' => route('admin.admin.edit', $id),
+			'formMethod' => 'PATCH',
+			'formRoute' => route('admin.admin.update', $id)
+		];
+		return view('pages.admin.admin.form', compact('data', 'page'));
 	}
 
 	/**
@@ -91,7 +99,21 @@ class AdminController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		//
+		$data = Admin::where('id', $id)->where('role', 'admin')->firstOrFail();
+		$user = auth()->user();
+		$request->validate([
+			'username' => ['required', Rule::unique('admins', 'username')->ignore($data->id)],
+			'password' => 'nullable|confirmed|min:8'
+		]);
+
+		$data->username = $request->username;
+		if ($request->password) {
+			$data->password = password_hash($request->password, PASSWORD_BCRYPT);
+		}
+		$data->save();
+
+		alert('Sukses', 'Data berhasil diubah', 'success');
+		return redirect()->back();
 	}
 
 	/**

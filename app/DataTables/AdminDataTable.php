@@ -21,7 +21,7 @@ class AdminDataTable extends DataTable
 	{
 		return (new EloquentDataTable($query))
 			->addColumn('action', function ($query) {
-				$opsi = '<a class="btn btn-icon btn-primary mr-1" data-toggle="tooltip" title="Ubah" href="' . route('admin.dokter.edit', $query->id) . '">
+				$opsi = '<a class="btn btn-icon btn-primary mr-1" data-toggle="tooltip" title="Ubah" href="' . route('admin.admin.edit', $query->id) . '">
 						<i class="fas fa-pencil-alt"></i>
 					</a>';
 				return $opsi;

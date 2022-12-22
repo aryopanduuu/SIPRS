@@ -49,6 +49,48 @@
 							@enderror
 						</div>
 					</div>
+					@if ($page['formMethod'] == 'PATCH')
+						<div class="form-group row mb-4">
+							{!! Form::label(
+							    'password',
+							    'Password',
+							    [
+							        'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
+							    ],
+							    false,
+							) !!}
+							<div class="col-sm-12 col-md-7">
+								{!! Form::password('password', [
+								    'class' => 'form-control' . $errors->first('password', ' is-invalid'),
+								]) !!}
+								@error('password')
+									<div class="invalid-feedback">
+										{{ $message }}
+									</div>
+								@enderror
+							</div>
+						</div>
+						<div class="form-group row mb-4">
+							{!! Form::label(
+							    'password_confirmation',
+							    'Konfirmasi Password',
+							    [
+							        'class' => 'col-form-label text-md-right col-12 col-md-3 col-lg-3',
+							    ],
+							    false,
+							) !!}
+							<div class="col-sm-12 col-md-7">
+								{!! Form::password('password_confirmation', [
+								    'class' => 'form-control',
+								]) !!}
+								@error('password')
+									<div class="invalid-feedback">
+										{{ $message }}
+									</div>
+								@enderror
+							</div>
+						</div>
+					@endif
 					<div class="form-group row mb-4">
 						<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
 						<div class="col-sm-12 col-md-7">
