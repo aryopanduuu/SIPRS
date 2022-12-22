@@ -10,8 +10,15 @@ class Admin extends Authenticatable
 {
 	use HasFactory, HasUuids;
 
+	/**
+	 * The attributes that are mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $fillable = ['username', 'password', 'role'];
+
 	public function hasRole($role)
 	{
-		return $this->where('role', $role)->count();
+		return $this->where('role', $role)->where('username', auth()->user()->username)->count();
 	}
 }

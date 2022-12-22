@@ -56,6 +56,14 @@ Route::middleware(['auth'])->group(function () {
 			Route::get('ubah/{id}', 'KontakController@edit')->name('edit');
 			Route::patch('ubah/{id}', 'KontakController@update')->name('update');
 		});
+
+		Route::prefix('admin')->name('admin.')->group(function () {
+			Route::get('/', 'AdminController@index')->name('index');
+			Route::get('/tambah', 'AdminController@create')->name('create');
+			Route::post('/tambah', 'AdminController@store')->name('store');
+			Route::get('ubah/{id}', 'AdminController@edit')->name('edit');
+			Route::patch('ubah/{id}', 'AdminController@update')->name('update');
+		});
 	});
 
 	Route::prefix('pendaftaran-online')->name('pendaftaran-online.')->group(function () {

@@ -29,7 +29,7 @@
 								<div class="form-group">
 									{!! Form::label('username', 'Username', ['class' => 'control-label']) !!}
 									{!! Form::text('username', null, [
-									    'class' => 'form-control' . $errors->first('username', 'is-invalid'),
+									    'class' => 'form-control' . $errors->first('username', ' is-invalid'),
 									    'required',
 									]) !!}
 									@error('username')

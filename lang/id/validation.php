@@ -201,7 +201,7 @@ return [
 		'time'                     => 'waktu',
 		'title'                    => 'judul',
 		'updated_at'               => 'updated at',
-		'username'                 => 'nama pengguna',
+		'username'                 => 'username',
 		'year'                     => 'tahun',
 	],
 ];

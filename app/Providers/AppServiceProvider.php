@@ -165,6 +165,21 @@ class AppServiceProvider extends ServiceProvider
 								'role'  => 'super_admin',
 							],
 						]
+					],
+					[
+						'title' => 'Lainnya',
+						'role'  => 'super_admin',
+						'menu'  => [
+							[
+								'url'         => route('admin.admin.index'),
+								'title'       => 'Admin',
+								'name'        => 'admin.index',
+								'icon'        => 'text',
+								'hasChild'    => true,
+								'prefixChild' => 'admin',
+								'role'  => 'super_admin',
+							],
+						]
 					]
 				];
 			}
