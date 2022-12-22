@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\UserBooking;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -33,6 +34,9 @@ class AppointmentDataTable extends DataTable
 					</a>';
 
 				return $opsi;
+			})
+			->editColumn('created_at', function ($query) {
+				return Carbon::parse($query->created_at)->locale('id-ID')->translatedFormat('l, d F Y H:i');
 			})
 			->setRowId('id')
 			->rawColumns(['status_pembayaran', 'action']);
@@ -91,6 +95,7 @@ class AppointmentDataTable extends DataTable
 			Column::make('tgl_periksa')->title('Tanggal Periksa'),
 			Column::make('perkiraan_jam')
 				->addClass('text-center'),
+			Column::make('created_at')->title('Tanggal Transaksi'),
 			Column::make('status_pembayaran')
 				->addClass('text-center')
 				->searchable(false),
