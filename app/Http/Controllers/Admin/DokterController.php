@@ -70,8 +70,8 @@ class DokterController extends Controller
 			'nip' => $validated['nip']
 		]);
 
-		// alert('Sukses', 'Data berhasil ditambahkan', 'success');
-		// return redirect()->back();
+		alert('Sukses', 'Data berhasil ditambahkan', 'success');
+		return redirect()->back();
 	}
 
 	/**
